@@ -45,7 +45,7 @@ cat politica/CLAUDE-esforco.md >> ~/meu-projeto/CLAUDE.md
 | `agentes/` | `dia-a-dia` (Opus, medium), `trabalho-longo` (Fable, high), `mecanico` (Haiku, low). |
 | `resets.md` | Guía para gastar los resets de Fable (promoción hasta el 16/11/2026) en un trabajo largo. |
 | `exemplos/` | Informe del proyecto de prueba y resumen de una máquina de producción. |
-| `tests/` | 16 pruebas sin red: `python3 -m unittest discover tests`. |
+| `tests/` | 17 pruebas sin red: `python3 -m unittest discover tests`. |
 
 ## El proceso, de principio a fin
 

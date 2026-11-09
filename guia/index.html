@@ -81,6 +81,7 @@
   .flow .arr{color:var(--amb);border:none;background:none;padding:0 .1em}
   pre{background:#0a0a0e;border:1px solid var(--line);border-radius:12px;padding:16px 18px;overflow:auto;font-size:.86rem;line-height:1.6;color:#d6d6e0}
   pre .c{color:#6f6f7c} pre .k{color:var(--amb2)} pre .s{color:#9ece6a}
+  @media(max-width:520px){pre{white-space:pre-wrap;overflow-wrap:anywhere}}
   .step{display:grid;grid-template-columns:46px minmax(0,1fr);gap:16px;margin-bottom:26px}
   .step>div,.card{min-width:0}
   p code,li code,td code{overflow-wrap:anywhere}
@@ -162,7 +163,7 @@
   <p class="sub">FrontierCode 2.0 mede se quem mantém projetos abertos aceitaria o código do modelo. Valores lidos no gráfico de custo por tarefa da <a href="https://www.anthropic.com/claude-fable-and-mythos-5-2" target="_blank" rel="noopener">página da Anthropic</a> (testes da própria empresa).</p>
   <div class="grid g4">
     <div class="card"><span class="num">1</span><h3>Fable · high</h3><p><strong>45,3%</strong> por ~US$ 7 a tarefa. Empata com o melhor do Opus 5.5 por cerca de metade do custo.</p></div>
-    <div class="card"><span class="num">2</span><h3>Opus 5.5 · melhor</h3><p><strong>45,5%</strong> por ~US$ 13 a tarefa. É o padrão que a Anthropic recomenda para o dia a dia.</p></div>
+    <div class="card"><span class="num">2</span><h3>Opus 5.5 · max</h3><p><strong>45,5%</strong> por ~US$ 13 a tarefa: a melhor nota do Opus, no esforço mais alto. (No dia a dia, a Anthropic recomenda o Opus; a regra do kit usa medium.)</p></div>
     <div class="card"><span class="num">3</span><h3>Fable · xhigh</h3><p><strong>49,1%</strong> por ~US$ 15. A maior nota entre os modelos lançados que a Anthropic testou.</p></div>
     <div class="card"><span class="num">4</span><h3>Fable · max</h3><p><strong>~45,7%</strong> por ~US$ 45: menos que o xhigh, cerca de 3× o custo. Por isso o Max não é padrão.</p></div>
   </div>
@@ -204,7 +205,7 @@
 
   <div class="step"><div class="b">1</div><div>
     <h3>Baixe o kit</h3>
-    <p>Um repositório pequeno: dois scripts, a regra, três agentes e o plano dos resets.</p>
+    <p>Um repositório pequeno: dois scripts, a regra, três agentes e o plano dos resets do Fable (o que é reset: <a href="#guia-resets">passo 8</a>).</p>
 <pre><span class="k">git clone</span> \
   <span class="s">https://github.com/inematds/esforco-certo.git</span>
 <span class="k">cd</span> esforco-certo</pre>
@@ -222,16 +223,18 @@
 
   <div class="step"><div class="b">3</div><div>
     <h3>Leia os alertas</h3>
-    <p><strong>MAX</strong>: esforço max fixo — troque por high (ou xhigh, se medir ganho). <strong>PADRAO_ALTO</strong>: xhigh como padrão global ou de um modelo — todo pedido paga o topo. <strong>FABLE_PADRAO</strong>: Fable como modelo padrão — gasta o limite mais rápido. As <strong>dicas</strong> mostram robôs com <code>claude -p</code> sem <code>--model</code> (herdam o padrão da conta).</p>
+    <p><strong>MAX</strong>: esforço max fixo — troque por high (ou xhigh, se medir ganho). <strong>PADRAO_ALTO</strong>: xhigh como padrão global ou de um modelo — todo pedido paga o topo. <strong>FABLE_PADRAO</strong>: Fable como modelo padrão — gasta o limite mais rápido. As <strong>dicas</strong> mostram robôs com <code>claude -p</code> sem <code>--model</code> (herdam o padrão da conta); dica não é alerta e não faz o <code>--estrito</code> falhar.</p>
 <pre><span class="c"># onde mudar o padrão do Claude Code (exemplo)</span>
-<span class="k">claude</span> --model opus --effort medium   <span class="c"># só nesta sessão</span>
+<span class="c"># só nesta sessão:</span>
+<span class="k">claude</span> --model opus --effort medium
 <span class="c"># ou no .claude/settings.json: "model": "opus", "effortLevel": "medium"</span></pre>
   </div></div>
 
   <div class="step"><div class="b">4</div><div>
     <h3>Cole a regra no CLAUDE.md</h3>
     <p>Opus medium no dia a dia, Fable high no trabalho longo, xhigh só medido, Max nunca como padrão, robôs sempre com <code>--model</code> e <code>--effort</code>.</p>
-<pre><span class="k">cat</span> politica/CLAUDE-esforco.md >> ~/meu-projeto/CLAUDE.md</pre>
+<pre><span class="k">cat</span> politica/CLAUDE-esforco.md \
+  >> ~/meu-projeto/CLAUDE.md</pre>
   </div></div>
 
   <div class="step"><div class="b">5</div><div>
@@ -260,14 +263,14 @@
 
   <div class="step"><div class="b">7</div><div>
     <h3>Trave no CI (opcional)</h3>
-    <p>Com <code>--estrito</code>, o auditor sai com código 1 se houver alerta, e o passo do CI falha. Assim ninguém deixa Max ou Fable como padrão sem querer. Copie o <code>auditar.py</code> (um arquivo só, sem dependências) para o seu projeto e chame no CI a partir da raiz do projeto.</p>
+    <p>Com <code>--estrito</code>, o auditor sai com código 1 se houver alerta, e o passo do CI falha. Assim ninguém deixa Max ou Fable como padrão sem querer. Copie o <code>auditar.py</code> (um arquivo só, sem dependências) para o seu projeto e chame no CI a partir da raiz do projeto; ele não audita a si mesmo. Funciona em Linux e macOS (no macOS, o <code>ab.sh</code> usa o <code>gtimeout</code> do <code>brew install coreutils</code>, se houver).</p>
 <pre><span class="k">mkdir -p</span> ~/meu-projeto/tools
 <span class="k">cp</span> auditar.py ~/meu-projeto/tools/
 <span class="c"># no CI do projeto (ex.: um passo do GitHub Actions):</span>
 <span class="k">python3</span> tools/auditar.py . --estrito</pre>
   </div></div>
 
-  <div class="step"><div class="b">8</div><div>
+  <div class="step" id="guia-resets"><div class="b">8</div><div>
     <h3>Gaste os resets do Fable num trabalho longo</h3>
     <p>Na promoção de lançamento, que vale até 16/11/2026, quem assina ganhou de 1 a 3 <strong>resets</strong> do Fable: cada reset zera o contador de uso do Fable para você continuar usando na mesma semana. No Pro e no Team padrão, o uso do Fable pode ocupar até metade do limite semanal do plano. O <code>resets.md</code> é o roteiro: escolher um trabalho longo, preparar no Opus, rodar no Fable high, fechar no Opus. Depois de 16/11, o mesmo roteiro serve para qualquer trabalho longo no Fable.</p>
 <pre><span class="k">less</span> resets.md
@@ -284,10 +287,10 @@
 <pre><span class="c"># cd tests/fixture &amp;&amp; python3 ../../auditar.py .</span>
 14 lugares fixam modelo ou esforço · 7 alertas · 2 dicas
 Modelos: fable 5 · opus 4 · herda 2 · variavel 1 · codex 1 · haiku 1
+- MAX          ./scripts/api.py:4
 - MAX          ./scripts/rodar.sh:3
 - FABLE_PADRAO ./.claude/settings.json:2
-- PADRAO_ALTO  ./.claude/settings.json:9  (padrão do claude-opus-5-5)
-- MAX          ./.claude/agents/pesado.md:5
+- PADRAO_ALTO  ./.claude/settings.json:3
 … e mais 3 alertas</pre>
       <p>Relatório completo em <a href="https://github.com/inematds/esforco-certo/blob/main/exemplos/auditoria-exemplo.md" target="_blank" rel="noopener">exemplos/auditoria-exemplo.md</a>.</p></div>
     <div class="card"><h3>Máquina de produção (3 projetos + ~/.claude)</h3>
@@ -314,8 +317,8 @@ effort: high
   <span class="chip">Roadmap</span>
   <h2>O que tem hoje e o que pode vir</h2>
   <p class="sub">O kit é pequeno de propósito. As próximas ideias só entram se ajudarem a decidir melhor.</p>
-  <div class="phase"><div class="tag">1.0 · hoje</div><div class="d"><strong>Auditoria, regra, agentes, teste A/B, plano dos resets</strong><span>Tudo testado: 16 testes do auditor sem rede e o ab.sh rodado nos dois modos.</span></div></div>
-  <div class="phase"><div class="tag">Ideia</div><div class="d"><strong>Gasto real por esforço</strong><span>Somar, pelos registros que o Claude Code já grava, quanto do limite cada modelo e esforço comeu na semana (como o kit irmão medidor-de-limite faz por projeto).</span></div></div>
+  <div class="phase"><div class="tag">1.0 · hoje</div><div class="d"><strong>Auditoria, regra, agentes, teste A/B, plano dos resets</strong><span>Tudo testado: 17 testes sem rede e o ab.sh rodado nos dois modos.</span></div></div>
+  <div class="phase"><div class="tag">Ideia</div><div class="d"><strong>Gasto real por esforço</strong><span>Somar, pelos registros que o Claude Code já grava, quanto do limite cada modelo e esforço comeu na semana (como o kit irmão <a href="https://inematds.github.io/medidor-de-limite/guia/" target="_blank" rel="noopener">medidor-de-limite</a> faz por projeto).</span></div></div>
   <div class="phase"><div class="tag">Ideia</div><div class="d"><strong>Sugestão de troca pronta</strong><span>Para cada alerta, mostrar a linha exata a mudar — sem aplicar sozinho.</span></div></div>
 </div></section>
 

@@ -1,6 +1,6 @@
 # Auditoria de modelo e esforço — 2026-11-09
 
-Pastas: . · esforco-certo 1.0.0
+Pastas: . · esforco-certo 1.0.1
 
 **14 lugares** fixam modelo ou esforço · **7 alertas** · 2 dicas
 

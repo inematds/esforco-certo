@@ -37,11 +37,15 @@ for c in "${CFGS[@]}"; do
   case "${c#*:}" in low|medium|high|xhigh|max) ;; *) echo "esforço inválido em '$c' (use low|medium|high|xhigh|max)" >&2; exit 2 ;; esac
 done
 command -v claude >/dev/null || { echo "claude (Claude Code) não está no PATH" >&2; exit 2; }
+TO=$(command -v timeout || command -v gtimeout || true)   # macOS: brew install coreutils traz o gtimeout
+[ -n "$TO" ] || echo "aviso: sem timeout/gtimeout; cada rodada roda sem teto de tempo" >&2
+comteto(){ local s=$1; shift; if [ -n "$TO" ]; then "$TO" "$s" "$@"; else "$@"; fi; }
 [ "${AB_USAR_API:-0}" = 1 ] || unset ANTHROPIC_API_KEY
 if [ $EDITAR = 1 ]; then
   git -C "$DIR" rev-parse --is-inside-work-tree >/dev/null 2>&1 || { echo "--editar precisa de um repositório git em $DIR" >&2; exit 2; }
   [ -z "$(git -C "$DIR" status --porcelain -- . ':!.ab')" ] || { echo "--editar: deixe o repositório limpo (commit ou stash) antes" >&2; exit 2; }
 fi
+[ -n "$CHECAR" ] && [ $EDITAR = 0 ] && echo "aviso: --checar só roda com --editar (sem cópia não há o que testar); ignorado" >&2
 SAI="$DIR/.ab/resultado-$(date +%Y%m%d-%H%M%S)"; mkdir -p "$SAI"   # tudo do teste fica em .ab/ (ponha .ab/ no .gitignore)
 printf '%s\n' "$TAREFA" > "$SAI/TAREFA.txt"
 echo "tarefa: $TAREFA"; echo "combinações: ${CFGS[*]} · saída: $SAI"
@@ -55,12 +59,12 @@ for c in "${CFGS[@]}"; do
     modo=(--permission-mode acceptEdits)
   fi
   echo "→ $nome rodando…"
-  ( cd "$onde" && timeout "$TETO" claude -p --model "$m" --effort "$e" --max-turns "$TURNOS" "${modo[@]}" \
+  ( cd "$onde" && comteto "$TETO" claude -p --model "$m" --effort "$e" --max-turns "$TURNOS" "${modo[@]}" \
       --output-format json -- "$TAREFA" ) > "$SAI/$nome.json" 2> "$SAI/$nome.err"
   rc=$?
   chk="-"
   if [ -n "$CHECAR" ] && [ $EDITAR = 1 ]; then
-    ( cd "$onde" && timeout 900 bash -c "$CHECAR" ) > "$SAI/$nome.checar.log" 2>&1 && chk="passou" || chk="falhou"
+    ( cd "$onde" && comteto 900 bash -c "$CHECAR" ) > "$SAI/$nome.checar.log" 2>&1 && chk="passou" || chk="falhou"
   fi
   python3 - "$SAI/$nome.json" "$SAI/$nome.md" "$rc" "$chk" "$nome" "$m" >> "$SAI/linhas.tsv" <<'PY'
 import json, sys

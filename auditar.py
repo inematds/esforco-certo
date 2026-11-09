@@ -26,7 +26,8 @@ import json, os, re, sys
 from datetime import date
 from pathlib import Path
 
-VERSAO = '1.0.0'
+VERSAO = '1.0.1'
+MARCA = 'auditar.py — mostra em que MODELO'
 IGNORAR_DIR = {'.git', 'node_modules', '.venv', 'venv', 'env', '__pycache__', 'dist', 'build', '.next', '.cache',
                'site-packages', '.mypy_cache', '.pytest_cache', '.tox', 'target', 'vendor', '.ab'}
 EXT_SCRIPT = {'.sh', '.bash', '.zsh', '.py', '.js', '.mjs', '.cjs', '.ts', '.service', '.timer', '.yml', '.yaml',
@@ -209,6 +210,8 @@ class Auditoria:
 
     def arquivo(self, p):
         nome, ext = p.name, p.suffix.lower()
+        if self.eu_mesmo(p):  # o auditor copiado para o projeto (ex.: tools/auditar.py) não audita a si mesmo
+            return
         partes = p.parts
         if p.is_symlink() and not p.exists():
             return
@@ -229,6 +232,17 @@ class Auditoria:
                         self.script(p)
             except Exception:
                 pass
+
+    def eu_mesmo(self, p):
+        try:
+            if p.resolve() == Path(__file__).resolve():
+                return True
+            if p.suffix == '.py' and p.stat().st_size < 200_000:
+                with open(p, encoding='utf-8', errors='replace') as fh:
+                    return MARCA in fh.read(400)
+        except OSError:
+            pass
+        return False
 
     def home_claude(self):
         h = Path.home()

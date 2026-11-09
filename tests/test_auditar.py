@@ -95,6 +95,16 @@ class TestAuditar(unittest.TestCase):
         self.assertEqual(r.returncode, 2)
         self.assertIn('esforço inválido', r.stderr)
 
+    def test_nao_audita_a_si_mesmo(self):
+        import shutil, tempfile
+        with tempfile.TemporaryDirectory() as d:
+            (Path(d) / 'tools').mkdir()
+            shutil.copy(RAIZ / 'auditar.py', Path(d) / 'tools' / 'auditar.py')
+            r = subprocess.run([sys.executable, 'tools/auditar.py', '.', '--json'], cwd=d, capture_output=True, text=True)
+            self.assertEqual(json.loads(r.stdout)['achados'], [])
+            r = subprocess.run([sys.executable, str(RAIZ / 'auditar.py'), d, '--json'], capture_output=True, text=True)
+            self.assertEqual(json.loads(r.stdout)['achados'], [])
+
     def test_pasta_inexistente(self):
         rc, _ = rodar('/nao/existe/mesmo')
         self.assertEqual(rc, 2)

@@ -14,4 +14,5 @@
   conta e muda de custo sem você ver.
 - **Placar não é o que você roda:** as notas publicadas são no esforço mais alto disponível; antes de trocar de modelo
   por causa de uma tabela, rode o mesmo trabalho nos dois (`ab.sh`) e compare resultado, tempo e limite gasto.
-- Conferir de tempos em tempos: `python3 auditar.py . --home` (lista quem fixa modelo/esforço e o que está caro sem precisar).
+- Conferir de tempos em tempos: `python3 tools/auditar.py . --home` (lista quem fixa modelo/esforço e o que está caro sem
+  precisar; o `auditar.py` vem do kit esforco-certo — copie para `tools/` ou rode da pasta do kit).
