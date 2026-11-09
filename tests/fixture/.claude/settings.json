@@ -1,0 +1,15 @@
+{
+  "model": "fable",
+  "effortLevel": "xhigh",
+  "env": {
+    "ANTHROPIC_MODEL": "claude-opus-5-5"
+  },
+  "modelSettings": {
+    "claude-opus-5-5": {
+      "effortLevel": "xhigh"
+    },
+    "claude-fable-5-1": {
+      "effortLevel": "xhigh"
+    }
+  }
+}

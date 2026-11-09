@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>esfuerzo justo — ¿Fable u Opus, y con qué esfuerzo?</title>
+<meta name="description" content="Kit gratis para Claude Code: audita con qué modelo y esfuerzo funciona tu proyecto, señala lo que cuesta de más sin necesidad (Max fijo, Xhigh como valor predeterminado), incluye la regla lista para CLAUDE.md y una prueba A/B con tu suscripción.">
+<link rel="alternate" hreflang="pt-BR" href="https://inematds.github.io/esforco-certo/guia/">
+<link rel="alternate" hreflang="en" href="https://inematds.github.io/esforco-certo/guia/en/">
+<link rel="alternate" hreflang="es" href="https://inematds.github.io/esforco-certo/guia/es/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0c0c10; --bg2:#14141b; --card:#16161e; --line:#272730;
+    --txt:#e9e9ee; --mut:#9a9aa6; --amb:#E2A23B; --amb2:#f0c070; --sky:#38bdf8; --pro:#cbd5e1;
+    color-scheme:dark;
+  }
+  body.light{
+    --bg:#f6f7f9; --bg2:#eceef2; --card:#ffffff; --line:#e1e3ea;
+    --txt:#1a1a22; --mut:#5b5b68; --amb:#b9791d; --amb2:#a16207; --sky:#0369a1; --pro:#b45309;
+    color-scheme:light;
+  }
+  body.light .hero .glow{opacity:.5}
+  body.light pre{background:#0e0e14;color:#d6d6e0}
+  body.light pre .c{color:#8a8a98}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--txt);font:16px/1.65 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  h1,h2,h3{font-family:Sora,sans-serif;line-height:1.15;margin:0}
+  a{color:var(--amb);text-decoration:none}
+  code,pre{font-family:"JetBrains Mono",monospace}
+  .wrap{max-width:1160px;margin:0 auto;padding:0 22px}
+  .mut{color:var(--mut)} .amb{color:var(--amb)}
+  .chip{display:inline-block;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--amb);font-weight:600;font-family:Sora}
+  nav{position:sticky;top:0;z-index:30;backdrop-filter:blur(12px);background:rgba(12,12,16,.78);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;align-items:center;gap:22px;height:60px}
+  nav .brand{display:flex;align-items:center;gap:8px;font-family:Sora;font-weight:800;letter-spacing:-.02em;color:var(--amb)}
+  nav .brand .emoji{font-size:1.25rem}
+  nav .sep{color:var(--mut);opacity:.45}
+  nav .inema{color:var(--sky);font-weight:600;font-size:.88rem;font-family:Sora}
+  nav .inema:hover{filter:brightness(1.15)}
+  nav .pro{color:var(--pro);font-weight:600;font-size:.88rem;font-family:Sora}
+  nav .pro:hover{filter:brightness(1.15)}
+  nav .clubpro{display:inline-flex;align-items:center;gap:6px}
+  nav .links{margin-left:auto;display:flex;align-items:center;gap:20px;font-size:.92rem}
+  nav .links a.sec{color:var(--mut)} nav .links a.sec:hover{color:var(--txt)}
+  .lang{display:inline-flex;gap:2px;font-family:Sora;font-size:.78rem}
+  .lang a{color:var(--mut);padding:.2em .45em;border-radius:6px} .lang a.on{color:var(--amb);background:rgba(226,162,59,.12)}
+  .tgl{background:var(--bg2);border:1px solid var(--line);color:var(--txt);width:38px;height:38px;border-radius:10px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;font-size:1.05rem}
+  .tgl:hover{border-color:var(--amb)}
+  .btn{display:inline-block;background:var(--amb);color:#1a1206;font-weight:600;padding:.6em 1.05em;border-radius:10px;font-family:Sora}
+  .btn.ghost{background:transparent;color:var(--txt);border:1px solid var(--line)}
+  @media(max-width:760px){nav .links a.sec{display:none}}
+  @media(max-width:520px){nav .wrap{gap:8px;padding:8px 14px;height:auto;flex-wrap:wrap} nav .links{gap:8px;margin-left:0;width:100%;justify-content:space-between} nav .btn{padding:.45em .7em;font-size:.82rem} .tgl{width:34px;height:34px}}
+  .hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
+  .hero .glow{position:absolute;inset:-40% -20% auto auto;width:70%;height:600px;background:radial-gradient(closest-side,rgba(226,162,59,.22),transparent 70%);pointer-events:none}
+  .hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;padding:74px 22px}
+  .hero h1{font-size:clamp(2.2rem,5vw,3.5rem);font-weight:800;letter-spacing:-.025em}
+  .hero p.lead{font-size:1.18rem;color:var(--mut);margin:1.1em 0 1.6em;max-width:34ch}
+  .hero .cta{display:flex;gap:12px;flex-wrap:wrap}
+  .hero figure{margin:0;border-radius:16px;overflow:hidden;border:1px solid var(--line);box-shadow:0 30px 80px -30px #000}
+  .hero figure img{width:100%;height:auto;display:block}
+  .resumo{padding:38px 0 34px;border-bottom:1px solid var(--line)}
+  .resumo p{font-size:1.12rem;line-height:1.7;max-width:74ch;margin:.55em 0 0}
+  @media(max-width:780px){.hero .wrap{grid-template-columns:1fr;padding:48px 22px}}
+  section{padding:62px 0;border-bottom:1px solid var(--line)}
+  section h2{font-size:clamp(1.5rem,3.4vw,2.1rem);font-weight:800;letter-spacing:-.02em}
+  section .sub{color:var(--mut);margin:.6em 0 2em;max-width:62ch}
+  .grid{display:grid;gap:16px}
+  .g3{grid-template-columns:repeat(3,1fr)} .g4{grid-template-columns:repeat(4,1fr)} .g2{grid-template-columns:repeat(2,1fr)}
+  @media(max-width:820px){.g3,.g4{grid-template-columns:1fr 1fr}}
+  @media(max-width:540px){.g2,.g3,.g4{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px}
+  .card h3{font-size:1.05rem;margin-bottom:.4em}
+  .card p{color:var(--mut);font-size:.92rem;margin:0}
+  .num{display:inline-flex;width:30px;height:30px;align-items:center;justify-content:center;border-radius:8px;background:rgba(226,162,59,.14);color:var(--amb);font-family:Sora;font-weight:800;font-size:.9rem;margin-bottom:.7em}
+  .flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:10px}
+  .flow span{background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:.45em .9em;font-size:.85rem;font-family:Sora;font-weight:600}
+  .flow .arr{color:var(--amb);border:none;background:none;padding:0 .1em}
+  pre{background:#0a0a0e;border:1px solid var(--line);border-radius:12px;padding:16px 18px;overflow:auto;font-size:.86rem;line-height:1.6;color:#d6d6e0}
+  pre .c{color:#6f6f7c} pre .k{color:var(--amb2)} pre .s{color:#9ece6a}
+  .step{display:grid;grid-template-columns:46px minmax(0,1fr);gap:16px;margin-bottom:26px}
+  .step>div,.card{min-width:0}
+  p code,li code,td code{overflow-wrap:anywhere}
+  .step .b{width:46px;height:46px;border-radius:12px;background:var(--amb);color:#1a1206;font-family:Sora;font-weight:800;font-size:1.25rem;display:flex;align-items:center;justify-content:center}
+  .step h3{font-size:1.12rem;margin-bottom:.3em}
+  .step p{color:var(--mut);margin:.2em 0 .7em}
+  .ex{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:680px){.ex{grid-template-columns:1fr}}
+  .ex figure{margin:0;border-radius:14px;overflow:hidden;border:1px solid var(--line)}
+  .ex figure img{width:100%;height:auto;display:block}
+  .ex figcaption{padding:12px 14px;font-size:.88rem;color:var(--mut);background:var(--card)}
+  .phase{display:flex;gap:14px;padding:16px 0;border-bottom:1px solid var(--line)}
+  .phase:last-child{border:none}
+  .phase .tag{flex:0 0 92px;font-family:Sora;font-weight:800;color:var(--amb)}
+  .phase .d strong{display:block;margin-bottom:.2em}
+  .phase .d span{color:var(--mut);font-size:.92rem}
+  footer{padding:46px 0;text-align:center;color:var(--mut);font-size:.9rem}
+  .pill{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:.3em .8em;font-size:.78rem;color:var(--mut);margin:0 4px}
+</style>
+</head>
+<body>
+
+<nav><div class="wrap">
+  <a class="brand" href="#top"><span class="emoji">🎚️</span> esfuerzo justo</a>
+  <span class="sep">|</span>
+  <span class="clubpro">
+    <a class="inema" href="https://inema.club" target="_blank" rel="noopener">INEMA.CLUB</a>
+    <span class="sep">-</span>
+    <a class="pro" href="https://inema.pro" target="_blank" rel="noopener">PRO</a>
+  </span>
+  <div class="links">
+    <a class="sec" href="#oque">Qué es</a>
+    <a class="sec" href="#numeros">Los números</a>
+    <a class="sec" href="#guia">Guía de uso</a>
+    <a class="sec" href="#exemplos">Ejemplos</a>
+    <a class="sec" href="#roadmap">Hoja de ruta</a>
+    <span class="lang"><a href="../">PT</a><a href="../en/">EN</a><a class="on" href="./">ES</a></span>
+    <button class="tgl" id="themeToggle" aria-label="Cambiar tema" title="Cambiar tema">🌙</button>
+    <a class="btn" href="https://github.com/inematds/esforco-certo" target="_blank" rel="noopener">GitHub</a>
+  </div>
+</div></nav>
+
+<header class="hero" id="top">
+  <div class="glow"></div>
+  <div class="wrap">
+    <div>
+      <span class="chip">Kit gratis · Claude Code</span>
+      <h1>¿Fable u Opus? Paga el esfuerzo <span class="amb">justo</span></h1>
+      <p class="lead">En minutos, descubre dónde tu proyecto usa el nivel más alto sin necesidad, pega una regla lista y mide antes de cambiar de modelo.</p>
+      <div class="cta">
+        <a class="btn" href="#guia">Empezar la guía</a>
+        <a class="btn ghost" href="https://github.com/inematds/esforco-certo" target="_blank" rel="noopener">Ver en GitHub</a>
+      </div>
+    </div>
+    <figure><img src="../assets/banner-es.jpg" alt="Banner del kit esfuerzo justo: Fable u Opus y con qué esfuerzo"></figure>
+  </div>
+</header>
+
+<section id="resumo" class="resumo"><div class="wrap">
+  <span class="chip">En resumen</span>
+  <p>Esfuerzo justo es un kit gratuito para quienes usan Claude Code en proyectos y robots. Lee la configuración, los agentes y los scripts de tu proyecto y muestra con qué modelo (Fable, Opus, Sonnet, Haiku) y esfuerzo funciona cada cosa. El esfuerzo indica cuánto piensa el modelo antes de responder, de <code>low</code> a <code>max</code>. Señala lo que cuesta de más sin necesidad, incluye una regla lista para pegar en tu CLAUDE.md y una prueba que ejecuta el mismo trabajo con dos esfuerzos, usando tu suscripción, para que compares. Necesitas Python 3 y, para la prueba, Claude Code; la auditoría no usa internet ni API.</p>
+</div></section>
+
+<section id="oque"><div class="wrap">
+  <span class="chip">Qué es</span>
+  <h2>Tres herramientas para no pagar de más por el nivel más alto</h2>
+  <p class="sub">La propia Anthropic, en el lanzamiento de Fable 5.2 (9/11/2026), recomienda empezar con Opus 5.5 y subir a Fable solo para el trabajo más difícil. El kit convierte ese consejo en algo que puedes aplicar y comprobar.</p>
+  <figure style="margin:0 0 26px;border-radius:16px;overflow:hidden;border:1px solid var(--line);box-shadow:0 30px 80px -30px #000"><img src="../assets/banner-grade-es.jpg" alt="Partes del kit: auditoría, regla lista, prueba A/B, agentes listos, plan de resets, sin API" loading="lazy" style="width:100%;display:block"></figure>
+  <div class="grid g3">
+    <div class="card"><h3>🔎 Auditoría con 1 comando</h3><p><code>auditar.py</code> revisa la configuración, los agentes, las skills, los scripts, los timers y el código que llama a la API, y enumera qué fija el modelo y el esfuerzo. Alerta si Max está fijo, Xhigh es el valor predeterminado o Fable es el modelo predeterminado.</p></div>
+    <div class="card"><h3>📋 Regla lista + agentes</h3><p><code>politica/CLAUDE-esforco.md</code> es el bloque para pegar en CLAUDE.md. En <code>agentes/</code> vienen tres agentes listos: uso diario (Opus, medium), trabajo largo (Fable, high) y tareas mecánicas (Haiku, low).</p></div>
+    <div class="card"><h3>⚖️ Prueba A/B con tu suscripción</h3><p><code>ab.sh</code> ejecuta el mismo pedido con dos o más combinaciones de modelo y esfuerzo, y arma un cuadro con el tiempo, los tokens, el costo equivalente, el modelo que realmente se ejecutó y si la prueba pasó.</p></div>
+  </div>
+</div></section>
+
+<section id="numeros"><div class="wrap">
+  <span class="chip">Los números</span>
+  <h2>En la prueba de código, Max hizo menos y costó 3×</h2>
+  <p class="sub">FrontierCode 2.0 mide si quienes mantienen proyectos abiertos aceptarían el código del modelo. Valores leídos en el gráfico de costo por tarea de la <a href="https://www.anthropic.com/claude-fable-and-mythos-5-2" target="_blank" rel="noopener">página de Anthropic</a> (pruebas de la propia empresa).</p>
+  <div class="grid g4">
+    <div class="card"><span class="num">1</span><h3>Fable · high</h3><p><strong>45,3%</strong> por ~US$ 7 la tarea. Empata con el mejor resultado de Opus 5.5 por cerca de la mitad del costo.</p></div>
+    <div class="card"><span class="num">2</span><h3>Opus 5.5 · mejor</h3><p><strong>45,5%</strong> por ~US$ 13 la tarea. Es el valor predeterminado que Anthropic recomienda para el uso diario.</p></div>
+    <div class="card"><span class="num">3</span><h3>Fable · xhigh</h3><p><strong>49,1%</strong> por ~US$ 15. La puntuación más alta entre los modelos lanzados que probó Anthropic.</p></div>
+    <div class="card"><span class="num">4</span><h3>Fable · max</h3><p><strong>~45,7%</strong> por ~US$ 45: menos que xhigh, con cerca de 3× el costo. Por eso Max no es el valor predeterminado.</p></div>
+  </div>
+  <p class="sub" style="margin-top:1.4em">Hay dos cosas que tener en cuenta. Con esfuerzo medium, Fable queda unos 3 puntos por encima de Opus por el mismo costo; y en otra prueba (diseño de hardware), el mejor resultado se obtuvo con Max. La regla no es «nunca Max», sino «Max solo después de medir». Además, toda la tabla de puntuaciones corresponde al esfuerzo más alto disponible, mientras que Claude Code viene con medium: esos resultados no reflejan lo que tú usas.</p>
+</div></section>
+
+<section id="fluxo"><div class="wrap">
+  <span class="chip">Cómo funciona</span>
+  <h2>Audita, decide la regla, mide, fija</h2>
+  <p class="sub">Nada cambia por sí solo: el kit lee y sugiere; tú decides si cambias el modelo o el esfuerzo.</p>
+  <div class="flow">
+    <span>auditar.py</span><span class="arr">→</span>
+    <span>Leer las alertas</span><span class="arr">→</span>
+    <span>Pegar la regla en CLAUDE.md</span><span class="arr">→</span>
+    <span>ab.sh mide tu trabajo</span><span class="arr">→</span>
+    <span>Elegir el valor predeterminado</span><span class="arr">→</span>
+    <span>--estrito en CI</span>
+  </div>
+</div></section>
+
+<section id="pre"><div class="wrap">
+  <span class="chip">Requisitos</span>
+  <h2>Qué necesitas</h2>
+  <p class="sub">Linux, macOS o WSL. La auditoría funciona por sí sola; la prueba A/B usa Claude Code con la sesión iniciada en tu suscripción.</p>
+  <div class="grid g3">
+    <div class="card"><h3>Python 3.8+</h3><p>Para <code>auditar.py</code> (solo usa la biblioteca estándar).</p><pre><span class="c"># comprobar</span>
+<span class="k">python3</span> --version</pre></div>
+    <div class="card"><h3>Claude Code</h3><p>Para <code>ab.sh</code>: el comando <code>claude</code> en el PATH y la sesión iniciada con tu suscripción.</p><pre><span class="c"># comprobar</span>
+<span class="k">claude</span> --version</pre></div>
+    <div class="card"><h3>git</h3><p>Para descargar el kit y para el modo <code>--editar</code> de la prueba (una copia del proyecto por combinación).</p><pre><span class="c"># comprobar</span>
+<span class="k">git</span> --version</pre></div>
+  </div>
+</div></section>
+
+<section id="guia"><div class="wrap">
+  <span class="chip">Guía de uso · paso a paso</span>
+  <h2>De cero al valor predeterminado adecuado en 8 pasos</h2>
+  <p class="sub">Cambia <code>~/meu-projeto</code> por la carpeta de tu proyecto.</p>
+
+  <div class="step"><div class="b">1</div><div>
+    <h3>Descarga el kit</h3>
+    <p>Un repositorio pequeño: dos scripts, la regla, tres agentes y el plan de resets.</p>
+<pre><span class="k">git clone</span> <span class="s">https://github.com/inematds/esforco-certo.git</span>
+<span class="k">cd</span> esforco-certo</pre>
+  </div></div>
+
+  <div class="step"><div class="b">2</div><div>
+    <h3>Audita tu proyecto</h3>
+    <p>Enumera cada lugar que fija el modelo o el esfuerzo, con archivo y línea. <code>--home</code> incluye tu <code>~/.claude</code> (configuración, agentes y skills globales) y los timers de systemd del usuario.</p>
+<pre><span class="k">python3 auditar.py</span> ~/meu-projeto --home        <span class="c"># informe Markdown en pantalla</span>
+<span class="k">python3 auditar.py</span> ~/meu-projeto --json > aud.json  <span class="c"># para que lo lea otro script</span></pre>
+  </div></div>
+
+  <div class="step"><div class="b">3</div><div>
+    <h3>Lee las alertas</h3>
+    <p><strong>MAX</strong>: esfuerzo max fijo; cámbialo por high (o xhigh, si al medir ves una mejora). <strong>PADRAO_ALTO</strong>: xhigh como valor predeterminado global o de un modelo; cada pedido paga el nivel más alto. <strong>FABLE_PADRAO</strong>: Fable como modelo predeterminado; consume el límite más rápido. Las <strong>sugerencias</strong> muestran robots con <code>claude -p</code> sin <code>--model</code> (heredan el valor predeterminado de la cuenta).</p>
+<pre><span class="c"># dónde cambiar el valor predeterminado de Claude Code (ejemplo)</span>
+<span class="k">claude</span> --model opus --effort medium   <span class="c"># solo en esta sesión</span>
+<span class="c"># o en .claude/settings.json: "model": "opus", "effortLevel": "medium"</span></pre>
+  </div></div>
+
+  <div class="step"><div class="b">4</div><div>
+    <h3>Pega la regla en CLAUDE.md</h3>
+    <p>Opus medium para el uso diario, Fable high para el trabajo largo, xhigh solo después de medir, nunca Max como valor predeterminado y robots siempre con <code>--model</code> y <code>--effort</code>.</p>
+<pre><span class="k">cat</span> politica/CLAUDE-esforco.md >> ~/meu-projeto/CLAUDE.md</pre>
+  </div></div>
+
+  <div class="step"><div class="b">5</div><div>
+    <h3>Usa los agentes listos</h3>
+    <p>Claude Code elige el agente según su descripción; cada uno ya incluye el modelo y el esfuerzo en el encabezado.</p>
+<pre><span class="k">mkdir -p</span> ~/meu-projeto/.claude/agents
+<span class="k">cp</span> agentes/*.md ~/meu-projeto/.claude/agents/   <span class="c"># dia-a-dia, trabalho-longo, mecanico</span></pre>
+  </div></div>
+
+  <div class="step"><div class="b">6</div><div>
+    <h3>Mide antes de cambiar de modelo</h3>
+    <p>Sin indicar combinaciones, ejecuta <code>opus:high</code>, <code>fable:medium</code> y <code>fable:high</code>. Sin <code>--editar</code>, cada ejecución solo lee el proyecto. Con <code>--editar</code>, cada combinación trabaja en una copia propia (git worktree) y <code>--checar</code> ejecuta tu prueba al final. Cada ejecución consume tu límite: empieza con una tarea pequeña y real.</p>
+<pre><span class="k">./ab.sh</span> <span class="s">"Revisa src/ y enumera los 5 riesgos más graves, con archivo y línea"</span> --dir ~/meu-projeto
+<span class="k">./ab.sh</span> <span class="s">"Corrige la prueba que falla en tests/"</span> --dir ~/meu-projeto --editar --checar <span class="s">"npm test"</span> -c opus:high -c fable:high
+<span class="c"># resultado: ~/meu-projeto/.ab/resultado-&lt;data&gt;/RESULTADO.md (agrega .ab/ a .gitignore)</span></pre>
+  </div></div>
+
+  <div class="step"><div class="b">7</div><div>
+    <h3>Fíjalo en CI (opcional)</h3>
+    <p>Con <code>--estrito</code>, el auditor termina con el código 1 si hay alertas. Así nadie fija Max o Fable como valor predeterminado sin querer.</p>
+<pre><span class="k">python3 auditar.py</span> . --estrito || <span class="k">echo</span> <span class="s">"modelo/esfuerzo caro como valor predeterminado — consulta el informe"</span></pre>
+  </div></div>
+
+  <div class="step"><div class="b">8</div><div>
+    <h3>Usa los resets de Fable en un trabajo largo</h3>
+    <p>En la promoción de lanzamiento (hasta el 16/11/2026), quienes tenían una suscripción recibieron de 1 a 3 resets de Fable, y en los planes Pro y Team estándar Fable está disponible hasta con la mitad del límite semanal. <code>resets.md</code> es la guía: elige un trabajo largo, prepáralo en Opus, ejecútalo con Fable high y termínalo en Opus.</p>
+<pre><span class="k">less</span> resets.md
+<span class="k">claude</span> --model fable --effort high   <span class="c"># en la sesión del trabajo largo</span></pre>
+  </div></div>
+</div></section>
+
+<section id="exemplos"><div class="wrap">
+  <span class="chip">Ejemplos</span>
+  <h2>Lo que el kit encontró en la práctica</h2>
+  <p class="sub">Ejecutado el 9/11/2026. El primero es el proyecto de prueba incluido en el repositorio; los otros dos, en una máquina de producción de INEMA.</p>
+  <div class="grid g2">
+    <div class="card"><h3>Proyecto de prueba (<code>tests/fixture</code>)</h3>
+<pre>14 lugares fixam modelo ou esforço · 7 alertas · 2 dicas
+Modelos: fable 5 · opus 4 · herda 2 · variavel 1 · codex 1 · haiku 1
+- MAX          ./scripts/rodar.sh:3
+- FABLE_PADRAO ./.claude/settings.json:2
+- PADRAO_ALTO  ./.claude/settings.json:9  (padrão do claude-opus-5-5)
+- MAX          ./.claude/agents/pesado.md:5</pre>
+      <p>Informe completo en <a href="https://github.com/inematds/esforco-certo/blob/main/exemplos/auditoria-exemplo.md" target="_blank" rel="noopener">exemplos/auditoria-exemplo.md</a> (en portugués).</p></div>
+    <div class="card"><h3>Máquina de producción (3 proyectos + ~/.claude)</h3>
+<pre>38 lugares fixam modelo ou esforço · 3 alertas
+- FABLE_PADRAO ~/.claude/settings.json  (modelo padrão = fable)
+- PADRAO_ALTO  ~/.claude/settings.json  (Opus 5.5 em xhigh por padrão)
+- PADRAO_ALTO  ~/.claude/settings.json  (Fable 5.1 em xhigh por padrão)</pre>
+      <p>Justo lo que la página de Anthropic recomienda evitar: el nivel más alto como valor predeterminado. 13 robots reciben el modelo mediante una variable que se lee de un archivo central de modelos (bien: se cambia en un solo lugar).</p></div>
+    <div class="card"><h3>Prueba A/B: el modelo que realmente se ejecutó</h3>
+<pre>| haiku-low  | ok (claude-haiku-5-5)  | 12 s | 434 tokens |
+| sonnet-low | ok (claude-sonnet-5-5) | 16 s | 539 tokens |</pre>
+      <p>En la primera versión, la prueba de solo lectura usaba el modo <em>plan</em>, y Claude Code cambiaba Haiku por Sonnet sin avisar. Por eso <code>ab.sh</code> muestra el modelo utilizado y marca «⚠ pidió X, ejecutó Y» cuando no coinciden.</p></div>
+    <div class="card"><h3>Agente para trabajo largo</h3>
+<pre>---
+name: trabalho-longo
+model: fable
+effort: high
+---</pre>
+      <p>Antes de hacer cambios, escribe el objetivo, el criterio para darlo por terminado y qué no debe hacer; prueba cada etapa y no sube a max por su cuenta.</p></div>
+  </div>
+</div></section>
+
+<section id="roadmap"><div class="wrap">
+  <span class="chip">Hoja de ruta</span>
+  <h2>Qué hay hoy y qué podría venir</h2>
+  <p class="sub">El kit es pequeño a propósito. Las próximas ideas solo se incluirán si ayudan a decidir mejor.</p>
+  <div class="phase"><div class="tag">1.0 · hoy</div><div class="d"><strong>Auditoría, regla, agentes, prueba A/B, plan de resets</strong><span>Todo probado: 16 pruebas del auditor sin red y ab.sh ejecutado en ambos modos.</span></div></div>
+  <div class="phase"><div class="tag">Idea</div><div class="d"><strong>Consumo real por esfuerzo</strong><span>Sumar, a partir de los registros que Claude Code ya guarda, cuánto del límite semanal consumió cada modelo y esfuerzo (como hace por proyecto el kit hermano medidor-de-limite).</span></div></div>
+  <div class="phase"><div class="tag">Idea</div><div class="d"><strong>Sugerencia de cambio lista</strong><span>Mostrar la línea exacta que hay que cambiar para cada alerta, sin aplicarla automáticamente.</span></div></div>
+</div></section>
+
+<footer>
+  <div class="wrap">
+    <div class="pill">Python 3</div><div class="pill">Bash</div><div class="pill">Claude Code</div>
+    <p style="margin-top:18px">esfuerzo justo · gratis, sin API, solo lectura ·
+      <a href="https://github.com/inematds/esforco-certo">inematds/esforco-certo</a> ·
+      <a href="https://inema.club">INEMA.CLUB</a></p>
+  </div>
+</footer>
+
+<script>
+  (function(){
+    var KEY='esforco-certo-theme';
+    var b=document.body, t=document.getElementById('themeToggle');
+    if(localStorage.getItem(KEY)==='light'){ b.classList.add('light'); t.textContent='☀️'; }
+    t.addEventListener('click',function(){
+      var light=b.classList.toggle('light');
+      t.textContent=light?'☀️':'🌙';
+      localStorage.setItem(KEY, light?'light':'dark');
+    });
+  })();
+</script>
+</body>
+</html>
