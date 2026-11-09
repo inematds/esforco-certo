@@ -129,7 +129,7 @@
     <div>
       <span class="chip">Kit grátis · Claude Code</span>
       <h1>Fable ou Opus? Pague o esforço <span class="amb">certo</span></h1>
-      <p class="lead">Veja em minutos onde o seu projeto roda no topo sem precisar, cole uma regra pronta e meça antes de trocar de modelo.</p>
+      <p class="lead">Descubra em que modelo e em que esforço cada parte do seu projeto no Claude Code roda, veja o que está caro sem precisar e meça antes de trocar.</p>
       <div class="cta">
         <a class="btn" href="#guia">Começar o guia</a>
         <a class="btn ghost" href="https://github.com/inematds/esforco-certo" target="_blank" rel="noopener">Ver no GitHub</a>
@@ -141,7 +141,7 @@
 
 <section id="resumo" class="resumo"><div class="wrap">
   <span class="chip">Em resumo</span>
-  <p>O esforço certo é um kit gratuito para quem usa o Claude Code em projetos e robôs. Ele lê as configurações, os agentes e os scripts do seu projeto e mostra em que modelo (Fable, Opus, Sonnet, Haiku) e em que esforço cada coisa roda — esforço é quanto o modelo pensa antes de responder, de <code>low</code> a <code>max</code>. Ele aponta o que está caro sem precisar, traz uma regra pronta para colar no seu CLAUDE.md e um teste que roda o mesmo trabalho em dois esforços, pela sua assinatura, para você comparar. Precisa de Python 3 e, para o teste, do Claude Code; a auditoria não usa internet nem API.</p>
+  <p>O esforço certo é um kit gratuito para quem usa o Claude Code em projetos e robôs. Ele lê as configurações, os agentes e os scripts do seu projeto e mostra em que modelo (Fable, Opus, Sonnet, Haiku) e em que esforço cada coisa roda — esforço é quanto o modelo pensa antes de responder, numa escala de cinco níveis: <code>low</code> &lt; <code>medium</code> &lt; <code>high</code> &lt; <code>xhigh</code> &lt; <code>max</code>. Ele aponta o que está caro sem precisar, traz uma regra pronta para colar no seu CLAUDE.md e um teste que roda o mesmo trabalho em dois esforços, pela sua assinatura, para você comparar. Precisa de Python 3 e, para o teste, do Claude Code; a auditoria não usa internet nem API.</p>
 </div></section>
 
 <section id="oque"><div class="wrap">
@@ -205,15 +205,19 @@
   <div class="step"><div class="b">1</div><div>
     <h3>Baixe o kit</h3>
     <p>Um repositório pequeno: dois scripts, a regra, três agentes e o plano dos resets.</p>
-<pre><span class="k">git clone</span> <span class="s">https://github.com/inematds/esforco-certo.git</span>
+<pre><span class="k">git clone</span> \
+  <span class="s">https://github.com/inematds/esforco-certo.git</span>
 <span class="k">cd</span> esforco-certo</pre>
   </div></div>
 
   <div class="step"><div class="b">2</div><div>
     <h3>Audite o seu projeto</h3>
-    <p>Lista cada lugar que fixa modelo ou esforço, com arquivo e linha. <code>--home</code> inclui o seu <code>~/.claude</code> (settings, agentes e skills globais) e os timers do systemd do usuário.</p>
-<pre><span class="k">python3 auditar.py</span> ~/meu-projeto --home        <span class="c"># relatório em Markdown na tela</span>
-<span class="k">python3 auditar.py</span> ~/meu-projeto --json > aud.json  <span class="c"># para outro script ler</span></pre>
+    <p>Primeiro, um teste sem risco no projeto de exemplo que vem no kit (dá 7 alertas de propósito). Depois, o seu projeto: a lista mostra cada lugar que fixa modelo ou esforço, com arquivo e linha. <code style="white-space:nowrap">--home</code> inclui o seu <code>~/.claude</code> (settings, agentes e skills globais) e os timers do systemd do usuário.</p>
+<pre><span class="k">python3 auditar.py</span> tests/fixture      <span class="c"># exemplo do kit</span>
+<span class="k">python3 auditar.py</span> ~/meu-projeto \
+  --home                             <span class="c"># o seu projeto</span>
+<span class="k">python3 auditar.py</span> ~/meu-projeto \
+  --json > aud.json                  <span class="c"># para outro script ler</span></pre>
   </div></div>
 
   <div class="step"><div class="b">3</div><div>
@@ -234,26 +238,38 @@
     <h3>Use os agentes prontos</h3>
     <p>O Claude Code escolhe o agente pela descrição; cada um já traz o modelo e o esforço no cabeçalho.</p>
 <pre><span class="k">mkdir -p</span> ~/meu-projeto/.claude/agents
-<span class="k">cp</span> agentes/*.md ~/meu-projeto/.claude/agents/   <span class="c"># dia-a-dia, trabalho-longo, mecanico</span></pre>
+<span class="k">cp</span> agentes/*.md ~/meu-projeto/.claude/agents/
+<span class="c"># guarde a regra e os agentes num commit (o passo 6 usa o último commit)</span>
+<span class="k">cd</span> ~/meu-projeto &amp;&amp; <span class="k">git add</span> CLAUDE.md .claude/agents \
+  &amp;&amp; <span class="k">git commit</span> -m <span class="s">"modelo e esforço: regra e agentes"</span>
+<span class="k">cd</span> -</pre>
   </div></div>
 
   <div class="step"><div class="b">6</div><div>
     <h3>Meça antes de trocar de modelo</h3>
-    <p>Sem combinações, roda <code>opus:high</code>, <code>fable:medium</code> e <code>fable:high</code>. Sem <code>--editar</code>, cada rodada só lê o projeto. Com <code>--editar</code>, cada combinação trabalha numa cópia própria (git worktree) e o <code>--checar</code> roda o seu teste no fim. Cada rodada gasta o seu limite: comece com uma tarefa pequena e real.</p>
-<pre><span class="k">./ab.sh</span> <span class="s">"Revise src/ e liste os 5 riscos mais graves, com arquivo e linha"</span> --dir ~/meu-projeto
-<span class="k">./ab.sh</span> <span class="s">"Corrija o teste quebrado em tests/"</span> --dir ~/meu-projeto --editar --checar <span class="s">"npm test"</span> -c opus:high -c fable:high
-<span class="c"># resultado: ~/meu-projeto/.ab/resultado-&lt;data&gt;/RESULTADO.md (ponha .ab/ no .gitignore)</span></pre>
+    <p>Sem <code>-c</code>, roda três combinações: <code>opus:high</code>, <code>fable:medium</code> e <code>fable:high</code> (duas com Fable, que gasta o limite mais rápido). Sem <code>--editar</code>, cada rodada só lê o projeto. Com <code>--editar</code>, cada combinação trabalha numa cópia própria do último commit (git worktree) — por isso o projeto precisa estar sem mudanças pendentes — e o <code>--checar</code> roda o seu teste dentro de cada cópia. A cópia vem sem pastas fora do git (<code>node_modules</code>, <code>.venv</code>): instale as dependências no próprio <code>--checar</code>. O quadro mostra tempo, tokens, o modelo que rodou de verdade e o <em>custo equivalente</em> — o preço pela tabela da API; na assinatura você paga em limite, não em dólar. Comece com uma tarefa pequena e real.</p>
+<pre><span class="k">./ab.sh</span> <span class="s">"Revise src/ e liste os 5 riscos mais graves"</span> \
+  --dir ~/meu-projeto
+<span class="k">./ab.sh</span> <span class="s">"Corrija o teste quebrado em tests/"</span> \
+  --dir ~/meu-projeto --editar \
+  --checar <span class="s">"npm ci &amp;&amp; npm test"</span> \
+  -c opus:high -c fable:high
+<span class="c"># resultado: ~/meu-projeto/.ab/resultado-&lt;data&gt;/RESULTADO.md</span>
+<span class="c"># (ponha .ab/ no .gitignore do projeto)</span></pre>
   </div></div>
 
   <div class="step"><div class="b">7</div><div>
     <h3>Trave no CI (opcional)</h3>
-    <p>Com <code>--estrito</code>, o auditor sai com código 1 se houver alerta. Assim ninguém fixa Max ou Fable como padrão sem querer.</p>
-<pre><span class="k">python3 auditar.py</span> . --estrito || <span class="k">echo</span> <span class="s">"modelo/esforço caro no padrão — ver relatório"</span></pre>
+    <p>Com <code>--estrito</code>, o auditor sai com código 1 se houver alerta, e o passo do CI falha. Assim ninguém deixa Max ou Fable como padrão sem querer. Copie o <code>auditar.py</code> (um arquivo só, sem dependências) para o seu projeto e chame no CI a partir da raiz do projeto.</p>
+<pre><span class="k">mkdir -p</span> ~/meu-projeto/tools
+<span class="k">cp</span> auditar.py ~/meu-projeto/tools/
+<span class="c"># no CI do projeto (ex.: um passo do GitHub Actions):</span>
+<span class="k">python3</span> tools/auditar.py . --estrito</pre>
   </div></div>
 
   <div class="step"><div class="b">8</div><div>
     <h3>Gaste os resets do Fable num trabalho longo</h3>
-    <p>Na promoção de lançamento (até 16/11/2026), assinantes ganharam de 1 a 3 resets do Fable, e no Pro e no Team padrão o Fable entra em até metade do limite semanal. O <code>resets.md</code> é o roteiro: escolher um trabalho longo, preparar no Opus, rodar no Fable high, fechar no Opus.</p>
+    <p>Na promoção de lançamento, que vale até 16/11/2026, quem assina ganhou de 1 a 3 <strong>resets</strong> do Fable: cada reset zera o contador de uso do Fable para você continuar usando na mesma semana. No Pro e no Team padrão, o uso do Fable pode ocupar até metade do limite semanal do plano. O <code>resets.md</code> é o roteiro: escolher um trabalho longo, preparar no Opus, rodar no Fable high, fechar no Opus. Depois de 16/11, o mesmo roteiro serve para qualquer trabalho longo no Fable.</p>
 <pre><span class="k">less</span> resets.md
 <span class="k">claude</span> --model fable --effort high   <span class="c"># na sessão do trabalho longo</span></pre>
   </div></div>
@@ -262,15 +278,17 @@
 <section id="exemplos"><div class="wrap">
   <span class="chip">Exemplos</span>
   <h2>O que o kit mostrou de verdade</h2>
-  <p class="sub">Rodado em 09/11/2026. O primeiro é o projeto de teste que vem no repositório; os outros dois, numa máquina de produção do INEMA.</p>
+  <p class="sub">Rodado em 09/11/2026: o projeto de exemplo do kit, uma máquina de produção do INEMA e o próprio teste A/B. O último cartão mostra um dos agentes prontos.</p>
   <div class="grid g2">
-    <div class="card"><h3>Projeto de teste (<code>tests/fixture</code>)</h3>
-<pre>14 lugares fixam modelo ou esforço · 7 alertas · 2 dicas
+    <div class="card"><h3>Projeto de exemplo (<code>tests/fixture</code>)</h3>
+<pre><span class="c"># cd tests/fixture &amp;&amp; python3 ../../auditar.py .</span>
+14 lugares fixam modelo ou esforço · 7 alertas · 2 dicas
 Modelos: fable 5 · opus 4 · herda 2 · variavel 1 · codex 1 · haiku 1
 - MAX          ./scripts/rodar.sh:3
 - FABLE_PADRAO ./.claude/settings.json:2
 - PADRAO_ALTO  ./.claude/settings.json:9  (padrão do claude-opus-5-5)
-- MAX          ./.claude/agents/pesado.md:5</pre>
+- MAX          ./.claude/agents/pesado.md:5
+… e mais 3 alertas</pre>
       <p>Relatório completo em <a href="https://github.com/inematds/esforco-certo/blob/main/exemplos/auditoria-exemplo.md" target="_blank" rel="noopener">exemplos/auditoria-exemplo.md</a>.</p></div>
     <div class="card"><h3>Máquina de produção (3 projetos + ~/.claude)</h3>
 <pre>38 lugares fixam modelo ou esforço · 3 alertas
@@ -304,7 +322,7 @@ effort: high
 <footer>
   <div class="wrap">
     <div class="pill">Python 3</div><div class="pill">Bash</div><div class="pill">Claude Code</div>
-    <p style="margin-top:18px">esforço certo · grátis, sem API, só leitura ·
+    <p style="margin-top:18px">esforço certo · grátis · auditoria só leitura, sem API ·
       <a href="https://github.com/inematds/esforco-certo">inematds/esforco-certo</a> ·
       <a href="https://inema.club">INEMA.CLUB</a></p>
   </div>

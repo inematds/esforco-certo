@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>right effort — Fable or Opus, and at what effort</title>
-<meta name="description" content="Free kit for Claude Code: audits which model and effort your project runs on, points out what costs more than needed (fixed Max, Xhigh as default), provides a ready-to-use rule for CLAUDE.md, and an A/B test through your subscription.">
+<meta name="description" content="Free kit for Claude Code: audits which model and effort your project runs on, flags what is unnecessarily expensive (fixed Max, Xhigh as the default), provides a ready-made rule for CLAUDE.md, and an A/B test through your subscription.">
 <link rel="alternate" hreflang="pt-BR" href="https://inematds.github.io/esforco-certo/guia/">
 <link rel="alternate" hreflang="en" href="https://inematds.github.io/esforco-certo/guia/en/">
 <link rel="alternate" hreflang="es" href="https://inematds.github.io/esforco-certo/guia/es/">
@@ -128,8 +128,8 @@
   <div class="wrap">
     <div>
       <span class="chip">Free kit · Claude Code</span>
-      <h1>Fable or Opus? Pay for the <span class="amb">right</span> effort</h1>
-      <p class="lead">See in minutes where your project uses the top effort without needing it, paste a ready-to-use rule, and measure before switching models.</p>
+      <h1>Fable or Opus? Pay the <span class="amb">right effort</span></h1>
+      <p class="lead">Find out which model and effort each part of your Claude Code project runs on, see what is unnecessarily expensive, and measure before switching.</p>
       <div class="cta">
         <a class="btn" href="#guia">Start the guide</a>
         <a class="btn ghost" href="https://github.com/inematds/esforco-certo" target="_blank" rel="noopener">View on GitHub</a>
@@ -141,18 +141,18 @@
 
 <section id="resumo" class="resumo"><div class="wrap">
   <span class="chip">In short</span>
-  <p>Right effort is a free kit for people who use Claude Code in projects and bots. It reads your project's settings, agents, and scripts and shows which model (Fable, Opus, Sonnet, Haiku) and effort each item runs on—effort is how much the model thinks before answering, from <code>low</code> to <code>max</code>. It points out what costs more than needed, gives you a ready-to-paste rule for your CLAUDE.md, and provides a test that runs the same task at two effort levels through your subscription so you can compare. You need Python 3 and, for the test, Claude Code; the audit does not use the internet or an API.</p>
+  <p>right effort is a free kit for people who use Claude Code in projects and bots. It reads your project's settings, agents, and scripts, then shows which model (Fable, Opus, Sonnet, Haiku) and effort each item runs on — effort is how much the model thinks before answering, on a five-level scale: <code>low</code> &lt; <code>medium</code> &lt; <code>high</code> &lt; <code>xhigh</code> &lt; <code>max</code>. It flags what is unnecessarily expensive, provides a ready-made rule to paste into your CLAUDE.md, and includes a test that runs the same task at two effort levels through your subscription so you can compare. You need Python 3 and Claude Code for the test; the audit uses no internet or API.</p>
 </div></section>
 
 <section id="oque"><div class="wrap">
   <span class="chip">What it is</span>
-  <h2>Three tools to avoid paying top rates unnecessarily</h2>
-  <p class="sub">Anthropic itself, in the Fable 5.2 launch (Nov 9, 2026), recommends starting with Opus 5.5 and moving up to Fable only for the hardest work. This kit turns that advice into something you can use and verify.</p>
-  <figure style="margin:0 0 26px;border-radius:16px;overflow:hidden;border:1px solid var(--line);box-shadow:0 30px 80px -30px #000"><img src="../assets/banner-grade-en.jpg" alt="Kit components: audit, ready-to-use rule, A/B test, ready-made agents, reset plan, no API" loading="lazy" style="width:100%;display:block"></figure>
+  <h2>Three tools to avoid paying for the top tier unnecessarily</h2>
+  <p class="sub">When Fable 5.2 launched (Nov 9, 2026), Anthropic itself recommended starting with Opus 5.5 and moving up to Fable only for the hardest work. This kit turns that advice into something you can apply and check.</p>
+  <figure style="margin:0 0 26px;border-radius:16px;overflow:hidden;border:1px solid var(--line);box-shadow:0 30px 80px -30px #000"><img src="../assets/banner-grade-en.jpg" alt="The parts of the kit: audit, ready-made rule, A/B test, ready-made agents, reset plan, no API" loading="lazy" style="width:100%;display:block"></figure>
   <div class="grid g3">
-    <div class="card"><h3>🔎 Audit with 1 command</h3><p><code>auditar.py</code> scans settings, agents, skills, scripts, timers, and code that calls the API, and lists what fixes the model and effort. It flags fixed Max, Xhigh as the default, and Fable as the default.</p></div>
-    <div class="card"><h3>📋 Ready-to-use rule + agents</h3><p><code>politica/CLAUDE-esforco.md</code> is the block to paste into CLAUDE.md. <code>agentes/</code> contains three ready-made agents: everyday work (Opus, medium), long tasks (Fable, high), and mechanical tasks (Haiku, low).</p></div>
-    <div class="card"><h3>⚖️ A/B test through your subscription</h3><p><code>ab.sh</code> runs the same request with two or more model and effort combinations and creates a table with time, tokens, equivalent cost, the model that actually ran, and whether your test passed.</p></div>
+    <div class="card"><h3>🔎 One-command audit</h3><p><code>auditar.py</code> scans settings, agents, skills, scripts, timers, and code that calls the API, and lists every place that pins a model or effort. It flags fixed Max, Xhigh as the default, and Fable as the default.</p></div>
+    <div class="card"><h3>📋 Ready-made rule + agents</h3><p><code>politica/CLAUDE-esforco.md</code> is the block to paste into CLAUDE.md. The <code>agentes/</code> folder includes three ready-made agents: day-to-day (Opus, medium), long-running work (Fable, high), and mechanical tasks (Haiku, low).</p></div>
+    <div class="card"><h3>⚖️ Subscription-based A/B test</h3><p><code>ab.sh</code> runs the same request with two or more model and effort combinations, then builds a table with time, tokens, equivalent cost, the model that actually ran, and whether your test passed.</p></div>
   </div>
 </div></section>
 
@@ -162,22 +162,22 @@
   <p class="sub">FrontierCode 2.0 measures whether people who maintain open source projects would accept the model's code. Values read from the cost-per-task chart on <a href="https://www.anthropic.com/claude-fable-and-mythos-5-2" target="_blank" rel="noopener">Anthropic's page</a> (the company's own tests).</p>
   <div class="grid g4">
     <div class="card"><span class="num">1</span><h3>Fable · high</h3><p><strong>45.3%</strong> at about US$ 7 per task. Ties with the best Opus 5.5 result at about half the cost.</p></div>
-    <div class="card"><span class="num">2</span><h3>Opus 5.5 · best</h3><p><strong>45.5%</strong> at about US$ 13 per task. This is the default Anthropic recommends for everyday work.</p></div>
+    <div class="card"><span class="num">2</span><h3>Opus 5.5 · best</h3><p><strong>45.5%</strong> at about US$ 13 per task. This is the default Anthropic recommends for day-to-day work.</p></div>
     <div class="card"><span class="num">3</span><h3>Fable · xhigh</h3><p><strong>49.1%</strong> at about US$ 15. The highest score among the released models Anthropic tested.</p></div>
     <div class="card"><span class="num">4</span><h3>Fable · max</h3><p><strong>~45.7%</strong> at about US$ 45: lower than xhigh, at about 3× the cost. That's why Max is not the default.</p></div>
   </div>
-  <p class="sub" style="margin-top:1.4em">Two things to keep in mind. At medium effort, Fable scores about 3 points higher than Opus for the same cost; and in another test (hardware design), the best result came at Max. The rule is not "never Max"; it's "use Max only after measuring." And the entire score table uses the highest available effort, while Claude Code defaults to medium: those scores do not reflect what you run.</p>
+  <p class="sub" style="margin-top:1.4em">Two things to keep in mind. At medium effort, Fable scores about 3 points higher than Opus at the same cost; and in another test (hardware design), the best result came at Max. The rule isn't "never use Max"; it's "use Max only after measuring." And the entire score table uses the highest available effort, while Claude Code defaults to medium: these scores don't reflect what you run.</p>
 </div></section>
 
 <section id="fluxo"><div class="wrap">
   <span class="chip">How it works</span>
   <h2>Audit, set the rule, measure, lock it in</h2>
-  <p class="sub">Nothing changes automatically: the kit reads and suggests; you choose whether to change the model or effort.</p>
+  <p class="sub">Nothing changes on its own: the kit reads and suggests; you choose whether to change the model or effort.</p>
   <div class="flow">
     <span>auditar.py</span><span class="arr">→</span>
     <span>Read the alerts</span><span class="arr">→</span>
     <span>Paste the rule into CLAUDE.md</span><span class="arr">→</span>
-    <span>ab.sh measures on your work</span><span class="arr">→</span>
+    <span>ab.sh measures your work</span><span class="arr">→</span>
     <span>Choose the default</span><span class="arr">→</span>
     <span>--estrito in CI</span>
   </div>
@@ -190,7 +190,7 @@
   <div class="grid g3">
     <div class="card"><h3>Python 3.8+</h3><p>For <code>auditar.py</code> (standard library only).</p><pre><span class="c"># check</span>
 <span class="k">python3</span> --version</pre></div>
-    <div class="card"><h3>Claude Code</h3><p>For <code>ab.sh</code>: the <code>claude</code> command in your PATH and logged into your subscription.</p><pre><span class="c"># check</span>
+    <div class="card"><h3>Claude Code</h3><p>For <code>ab.sh</code>: the <code>claude</code> command in PATH, logged into your subscription.</p><pre><span class="c"># check</span>
 <span class="k">claude</span> --version</pre></div>
     <div class="card"><h3>git</h3><p>To download the kit and use the test's <code>--editar</code> mode (one project copy per combination).</p><pre><span class="c"># check</span>
 <span class="k">git</span> --version</pre></div>
@@ -199,26 +199,30 @@
 
 <section id="guia"><div class="wrap">
   <span class="chip">User guide · step by step</span>
-  <h2>From zero to the right default in 8 steps</h2>
+  <h2>From scratch to the right default in 8 steps</h2>
   <p class="sub">Replace <code>~/meu-projeto</code> with your project folder.</p>
 
   <div class="step"><div class="b">1</div><div>
     <h3>Download the kit</h3>
     <p>A small repository: two scripts, the rule, three agents, and the reset plan.</p>
-<pre><span class="k">git clone</span> <span class="s">https://github.com/inematds/esforco-certo.git</span>
+<pre><span class="k">git clone</span> \
+  <span class="s">https://github.com/inematds/esforco-certo.git</span>
 <span class="k">cd</span> esforco-certo</pre>
   </div></div>
 
   <div class="step"><div class="b">2</div><div>
     <h3>Audit your project</h3>
-    <p>Lists each place that fixes a model or effort, with the file and line. <code>--home</code> includes your <code>~/.claude</code> (global settings, agents, and skills) and the user's systemd timers.</p>
-<pre><span class="k">python3 auditar.py</span> ~/meu-projeto --home        <span class="c"># Markdown report on screen</span>
-<span class="k">python3 auditar.py</span> ~/meu-projeto --json > aud.json  <span class="c"># for another script to read</span></pre>
+    <p>First, run a risk-free test on the example project included in the kit (it intentionally produces 7 alerts). Then audit your own project: the list shows every place that pins a model or effort, with the file and line. <code style="white-space:nowrap">--home</code> includes your <code>~/.claude</code> (global settings, agents, and skills) and the user's systemd timers.</p>
+<pre><span class="k">python3 auditar.py</span> tests/fixture      <span class="c"># kit example</span>
+<span class="k">python3 auditar.py</span> ~/meu-projeto \
+  --home                             <span class="c"># your project</span>
+<span class="k">python3 auditar.py</span> ~/meu-projeto \
+  --json > aud.json                  <span class="c"># for another script to read</span></pre>
   </div></div>
 
   <div class="step"><div class="b">3</div><div>
     <h3>Read the alerts</h3>
-    <p><strong>MAX</strong>: effort fixed at max—switch to high (or xhigh if you measure a benefit). <strong>PADRAO_ALTO</strong>: xhigh as the global or model default—every request pays the top rate. <strong>FABLE_PADRAO</strong>: Fable as the default model—uses up your limit faster. The <strong>tips</strong> point out bots that use <code>claude -p</code> without <code>--model</code> (they inherit the account default).</p>
+    <p><strong>MAX</strong>: effort fixed at max — switch to high (or xhigh if you measure a gain). <strong>PADRAO_ALTO</strong>: xhigh as the global or model default — every request pays the top-tier cost. <strong>FABLE_PADRAO</strong>: Fable as the default model — it uses up your limit faster. The <strong>tips</strong> point out bots using <code>claude -p</code> without <code>--model</code> (they inherit the account default).</p>
 <pre><span class="c"># where to change the Claude Code default (example)</span>
 <span class="k">claude</span> --model opus --effort medium   <span class="c"># this session only</span>
 <span class="c"># or in .claude/settings.json: "model": "opus", "effortLevel": "medium"</span></pre>
@@ -226,85 +230,99 @@
 
   <div class="step"><div class="b">4</div><div>
     <h3>Paste the rule into CLAUDE.md</h3>
-    <p>Opus medium for everyday work, Fable high for long tasks, xhigh only after measuring, never Max as the default, and always use <code>--model</code> and <code>--effort</code> for bots.</p>
+    <p>Opus medium for day-to-day work, Fable high for long-running work, xhigh only after measuring, never Max as the default, and always use <code>--model</code> and <code>--effort</code> for bots.</p>
 <pre><span class="k">cat</span> politica/CLAUDE-esforco.md >> ~/meu-projeto/CLAUDE.md</pre>
   </div></div>
 
   <div class="step"><div class="b">5</div><div>
     <h3>Use the ready-made agents</h3>
-    <p>Claude Code chooses an agent based on its description; each one already has the model and effort in its header.</p>
+    <p>Claude Code chooses the agent based on its description; each one already has the model and effort in its header.</p>
 <pre><span class="k">mkdir -p</span> ~/meu-projeto/.claude/agents
-<span class="k">cp</span> agentes/*.md ~/meu-projeto/.claude/agents/   <span class="c"># everyday, long-task, mechanical</span></pre>
+<span class="k">cp</span> agentes/*.md ~/meu-projeto/.claude/agents/
+<span class="c"># save the rule and agents in a commit (step 6 uses the latest commit)</span>
+<span class="k">cd</span> ~/meu-projeto &amp;&amp; <span class="k">git add</span> CLAUDE.md .claude/agents \
+  &amp;&amp; <span class="k">git commit</span> -m <span class="s">"model and effort: rule and agents"</span>
+<span class="k">cd</span> -</pre>
   </div></div>
 
   <div class="step"><div class="b">6</div><div>
     <h3>Measure before switching models</h3>
-    <p>Without specifying combinations, it runs <code>opus:high</code>, <code>fable:medium</code>, and <code>fable:high</code>. Without <code>--editar</code>, each run only reads the project. With <code>--editar</code>, each combination works in its own copy (git worktree), and <code>--checar</code> runs your test at the end. Each run uses your limit: start with a small, real task.</p>
-<pre><span class="k">./ab.sh</span> <span class="s">"Review src/ and list the 5 most serious risks, with file and line"</span> --dir ~/meu-projeto
-<span class="k">./ab.sh</span> <span class="s">"Fix the broken test in tests/"</span> --dir ~/meu-projeto --editar --checar <span class="s">"npm test"</span> -c opus:high -c fable:high
-<span class="c"># result: ~/meu-projeto/.ab/resultado-&lt;data&gt;/RESULTADO.md (add .ab/ to .gitignore)</span></pre>
+    <p>Without <code>-c</code>, it runs three combinations: <code>opus:high</code>, <code>fable:medium</code>, and <code>fable:high</code> (two with Fable, which uses up your limit faster). Without <code>--editar</code>, each run only reads the project. With <code>--editar</code>, each combination works in its own copy of the latest commit (git worktree) — so the project must have no uncommitted changes — and <code>--checar</code> runs your test inside each copy. The copy excludes folders outside git (<code>node_modules</code>, <code>.venv</code>): install dependencies as part of <code>--checar</code>. The table shows time, tokens, the model that actually ran, and the <em>equivalent cost</em> — the price from the API pricing table; with a subscription, you pay against your usage limit, not in dollars. Start with a small, real task.</p>
+<pre><span class="k">./ab.sh</span> <span class="s">"Review src/ and list the 5 most serious risks"</span> \
+  --dir ~/meu-projeto
+<span class="k">./ab.sh</span> <span class="s">"Fix the broken test in tests/"</span> \
+  --dir ~/meu-projeto --editar \
+  --checar <span class="s">"npm ci &amp;&amp; npm test"</span> \
+  -c opus:high -c fable:high
+<span class="c"># result: ~/meu-projeto/.ab/resultado-&lt;data&gt;/RESULTADO.md</span>
+<span class="c"># (add .ab/ to the project's .gitignore)</span></pre>
   </div></div>
 
   <div class="step"><div class="b">7</div><div>
-    <h3>Enforce it in CI (optional)</h3>
-    <p>With <code>--estrito</code>, the auditor exits with code 1 if there are any alerts. That way no one accidentally sets Max or Fable as the default.</p>
-<pre><span class="k">python3 auditar.py</span> . --estrito || <span class="k">echo</span> <span class="s">"expensive model/effort as default — see report"</span></pre>
+    <h3>Lock it down in CI (optional)</h3>
+    <p>With <code>--estrito</code>, the auditor exits with code 1 if there are any alerts, and the CI step fails. This keeps anyone from accidentally setting Max or Fable as the default. Copy <code>auditar.py</code> (a single file with no dependencies) into your project and call it in CI from the project root.</p>
+<pre><span class="k">mkdir -p</span> ~/meu-projeto/tools
+<span class="k">cp</span> auditar.py ~/meu-projeto/tools/
+<span class="c"># in the project's CI (e.g., a GitHub Actions step):</span>
+<span class="k">python3</span> tools/auditar.py . --estrito</pre>
   </div></div>
 
   <div class="step"><div class="b">8</div><div>
-    <h3>Use Fable resets on a long task</h3>
-    <p>During the launch promotion (through Nov 16, 2026), subscribers received 1 to 3 Fable resets, and on Pro and standard Team, Fable is included for up to half the weekly limit. <code>resets.md</code> is the playbook: choose a long task, prepare it in Opus, run it in Fable high, and wrap up in Opus.</p>
+    <h3>Use Fable resets for long-running work</h3>
+    <p>As part of the launch promotion, valid through Nov 16, 2026, subscribers received 1 to 3 Fable <strong>resets</strong>: each reset clears Fable's usage counter so you can keep using it in the same week. On Pro and the standard Team plan, Fable usage can take up to half of the plan's weekly limit. <code>resets.md</code> is the playbook: choose a long-running task, prepare it in Opus, run it on Fable high, and wrap up in Opus. After Nov 16, the same playbook works for any long-running task on Fable.</p>
 <pre><span class="k">less</span> resets.md
-<span class="k">claude</span> --model fable --effort high   <span class="c"># in the long-task session</span></pre>
+<span class="k">claude</span> --model fable --effort high   <span class="c"># in the long-running work session</span></pre>
   </div></div>
 </div></section>
 
 <section id="exemplos"><div class="wrap">
   <span class="chip">Examples</span>
-  <h2>What the kit actually showed</h2>
-  <p class="sub">Run on Nov 9, 2026. The first is the test project included in the repository; the other two were run on an INEMA production machine.</p>
+  <h2>What the kit actually found</h2>
+  <p class="sub">Run on Nov 9, 2026: the kit's example project, an INEMA production machine, and the A/B test itself. The last card shows one of the ready-made agents.</p>
   <div class="grid g2">
-    <div class="card"><h3>Test project (<code>tests/fixture</code>)</h3>
-<pre>14 lugares fixam modelo ou esforço · 7 alertas · 2 dicas
-Modelos: fable 5 · opus 4 · herda 2 · variavel 1 · codex 1 · haiku 1
+    <div class="card"><h3>Example project (<code>tests/fixture</code>)</h3>
+<pre><span class="c"># cd tests/fixture &amp;&amp; python3 ../../auditar.py .</span>
+14 places pin a model or effort · 7 alerts · 2 tips
+Models: fable 5 · opus 4 · inherited 2 · variable 1 · codex 1 · haiku 1
 - MAX          ./scripts/rodar.sh:3
 - FABLE_PADRAO ./.claude/settings.json:2
-- PADRAO_ALTO  ./.claude/settings.json:9  (padrão do claude-opus-5-5)
-- MAX          ./.claude/agents/pesado.md:5</pre>
-      <p>Full report in <a href="https://github.com/inematds/esforco-certo/blob/main/exemplos/auditoria-exemplo.md" target="_blank" rel="noopener">exemplos/auditoria-exemplo.md</a> (in Portuguese).</p></div>
+- PADRAO_ALTO  ./.claude/settings.json:9  (default for claude-opus-5-5)
+- MAX          ./.claude/agents/pesado.md:5
+… and 3 more alerts</pre>
+      <p>Full report in <a href="https://github.com/inematds/esforco-certo/blob/main/exemplos/auditoria-exemplo.md" target="_blank" rel="noopener">exemplos/auditoria-exemplo.md (in Portuguese)</a>.</p></div>
     <div class="card"><h3>Production machine (3 projects + ~/.claude)</h3>
-<pre>38 lugares fixam modelo ou esforço · 3 alertas
-- FABLE_PADRAO ~/.claude/settings.json  (modelo padrão = fable)
-- PADRAO_ALTO  ~/.claude/settings.json  (Opus 5.5 em xhigh por padrão)
-- PADRAO_ALTO  ~/.claude/settings.json  (Fable 5.1 em xhigh por padrão)</pre>
-      <p>Exactly what Anthropic's page says to avoid: the top as the default. 13 bots get the model from a variable read from a central model file (good: change it in one place).</p></div>
+<pre>38 places pin a model or effort · 3 alerts
+- FABLE_PADRAO ~/.claude/settings.json  (default model = fable)
+- PADRAO_ALTO  ~/.claude/settings.json  (Opus 5.5 at xhigh by default)
+- PADRAO_ALTO  ~/.claude/settings.json  (Fable 5.1 at xhigh by default)</pre>
+      <p>Exactly what Anthropic's page says to avoid: the top tier as the default. 13 bots get the model from a variable read from a central model file (good: change it in one place).</p></div>
     <div class="card"><h3>A/B test: the model that actually ran</h3>
 <pre>| haiku-low  | ok (claude-haiku-5-5)  | 12 s | 434 tokens |
 | sonnet-low | ok (claude-sonnet-5-5) | 16 s | 539 tokens |</pre>
-      <p>In the first version, the read-only test used <em>plan</em> mode, where Claude Code switched Haiku to Sonnet without saying so. That's why <code>ab.sh</code> shows the model used and marks "⚠ asked for X, ran Y" when they differ.</p></div>
-    <div class="card"><h3>Long-task agent</h3>
+      <p>In the first version, the read-only test used <em>plan</em> mode, where Claude Code silently switched Haiku to Sonnet. That's why <code>ab.sh</code> shows the model used and marks "⚠ requested X, ran Y" when they differ.</p></div>
+    <div class="card"><h3>Long-running work agent</h3>
 <pre>---
 name: trabalho-longo
 model: fable
 effort: high
 ---</pre>
-      <p>Before making changes, it writes the objective, completion criteria, and what not to do; tests every step; and does not raise the effort to max on its own.</p></div>
+      <p>Before making changes, it writes down the goal, the completion criteria, and what not to do; tests each step; and never moves itself up to max.</p></div>
   </div>
 </div></section>
 
 <section id="roadmap"><div class="wrap">
   <span class="chip">Roadmap</span>
-  <h2>What’s available now and what may come next</h2>
+  <h2>What’s here today and what may come next</h2>
   <p class="sub">The kit is intentionally small. New ideas will be added only if they help you make better decisions.</p>
-  <div class="phase"><div class="tag">1.0 · today</div><div class="d"><strong>Audit, rule, agents, A/B test, reset plan</strong><span>All tested: 16 auditor tests without network access, and ab.sh run in both modes.</span></div></div>
-  <div class="phase"><div class="tag">Idea</div><div class="d"><strong>Actual usage by effort</strong><span>Use the logs Claude Code already saves to add up how much of the limit each model and effort used during the week (as the related medidor-de-limite kit does by project).</span></div></div>
-  <div class="phase"><div class="tag">Idea</div><div class="d"><strong>Ready-to-use change suggestion</strong><span>For each alert, show the exact line to change—without applying it automatically.</span></div></div>
+  <div class="phase"><div class="tag">1.0 · today</div><div class="d"><strong>Audit, rule, agents, A/B test, reset plan</strong><span>Everything tested: 16 auditor tests without network access, and ab.sh run in both modes.</span></div></div>
+  <div class="phase"><div class="tag">Idea</div><div class="d"><strong>Actual usage by effort</strong><span>Use the records Claude Code already saves to total how much of the weekly limit each model and effort used (as the related medidor-de-limite kit does by project).</span></div></div>
+  <div class="phase"><div class="tag">Idea</div><div class="d"><strong>Ready-made change suggestions</strong><span>For each alert, show the exact line to change — without applying it automatically.</span></div></div>
 </div></section>
 
 <footer>
   <div class="wrap">
     <div class="pill">Python 3</div><div class="pill">Bash</div><div class="pill">Claude Code</div>
-    <p style="margin-top:18px">right effort · free, no API, read-only ·
+    <p style="margin-top:18px">right effort · free · read-only audit, no API ·
       <a href="https://github.com/inematds/esforco-certo">inematds/esforco-certo</a> ·
       <a href="https://inema.club">INEMA.CLUB</a></p>
   </div>

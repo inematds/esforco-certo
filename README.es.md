@@ -40,7 +40,7 @@ cat politica/CLAUDE-esforco.md >> ~/meu-projeto/CLAUDE.md
 | Archivo | Qué hace |
 |---|---|
 | `auditar.py` | Lee `.claude/settings*.json` (`model`, `effortLevel`, `modelSettings.<modelo>.effortLevel`), agentes, skills, comandos, scripts, timers y código que llama a la API. Alertas: `MAX`, `PADRAO_ALTO`, `FABLE_PADRAO`. Opciones: `--home`, `--json`, `--estrito` (CI), `--anonimo`, `--docs`. |
-| `ab.sh` | Ejecuta el mismo pedido con `claude -p` en 2 o más combinaciones `modelo:esfuerzo` (predeterminadas: `opus:high fable:medium fable:high`). Solo lectura de forma predeterminada; `--editar` usa un git worktree por combinación y `--checar "<cmd>"` ejecuta tu prueba. Muestra una tabla con el tiempo, los tokens, el costo equivalente y el modelo que realmente se ejecutó. Usa la suscripción (elimina `ANTHROPIC_API_KEY` del entorno). |
+| `ab.sh` | Ejecuta el mismo pedido con `claude -p` en 2 o más combinaciones `modelo:esfuerzo` (predeterminadas: `opus:high fable:medium fable:high`). Solo lectura de forma predeterminada; `--editar` usa un git worktree del último commit por combinación (haz commit antes; viene sin `node_modules`/`.venv`) y `--checar "<cmd>"` ejecuta tu prueba — instala las dependencias en él, p. ej. `--checar "npm ci && npm test"`. Muestra tiempo, tokens, costo equivalente y el modelo que realmente se ejecutó. Usa tu suscripción (quita `ANTHROPIC_API_KEY` del entorno). |
 | `politica/CLAUDE-esforco.md` | Bloque listo para CLAUDE.md/AGENTS.md. |
 | `agentes/` | `dia-a-dia` (Opus, medium), `trabalho-longo` (Fable, high), `mecanico` (Haiku, low). |
 | `resets.md` | Guía para gastar los resets de Fable (promoción hasta el 16/11/2026) en un trabajo largo. |
@@ -54,9 +54,9 @@ cat politica/CLAUDE-esforco.md >> ~/meu-projeto/CLAUDE.md
 | 1 | Descargar el kit | `git clone https://github.com/inematds/esforco-certo.git` | 🧠 tú |
 | 2 | Auditar el proyecto | `python3 auditar.py <pasta> --home` | ⚙️ script |
 | 3 | Decidir el valor predeterminado a partir de las alertas | leer el informe; cambiar `model`/`effortLevel` manualmente | 🧠 tú |
-| 4 | Pegar la regla y los agentes | `cat politica/CLAUDE-esforco.md >> CLAUDE.md` · `cp agentes/*.md .claude/agents/` | 🧠 tú |
-| 5 | Medir en tu trabajo | `./ab.sh "<tarefa>" --dir <pasta> [--editar --checar "<teste>"]` | 🤖 `claude -p` |
-| 6 | Bloquear en CI | `python3 auditar.py . --estrito` | ⚙️ script |
+| 4 | Pegar la regla y los agentes | `cat politica/CLAUDE-esforco.md >> CLAUDE.md` · `cp agentes/*.md .claude/agents/` + `git commit` | 🧠 tú |
+| 5 | Medir en tu trabajo | `./ab.sh "<tarea>" --dir <carpeta> [--editar --checar "<prueba>"]` | 🤖 `claude -p` |
+| 6 | Bloquear en CI | `cp auditar.py <proyecto>/tools/` · en CI: `python3 tools/auditar.py . --estrito` | ⚙️ script |
 | 7 | Gastar los resets en un trabajo largo | seguir `resets.md` | 🧠 tú + 🤖 |
 
 ## Límites

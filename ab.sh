@@ -6,14 +6,15 @@
 #   ./ab.sh "<tarefa>" [-c modelo:esforço ...] [--dir PASTA] [--editar] [--checar "<comando>"] [--turnos N]
 # Exemplos:
 #   ./ab.sh "Revise src/ e liste os 5 riscos mais graves, com arquivo e linha"                 # só lê
-#   ./ab.sh "Corrija o teste quebrado em tests/" --editar --checar "npm test" -c opus:high -c fable:high
+#   ./ab.sh "Corrija o teste quebrado em tests/" --editar --checar "npm ci && npm test" -c opus:high -c fable:high
 # Padrão: -c opus:high -c fable:medium -c fable:high
 #
 # Como roda:
 #   - sem --editar: cada combinação roda na PASTA só com as ferramentas de leitura (Read, Grep, Glob: não muda nada) e a resposta
 #     fica em .ab/resultado-<data>/<combinação>.md (o modo "plan" não serve: nele o Claude Code troca o Haiku pelo Sonnet);
 #   - com --editar: cada combinação ganha uma cópia própria (git worktree em .ab/<combinação>), pode editar arquivos (acceptEdits)
-#     e, no fim, o script roda o --checar dentro de cada cópia. As cópias ficam para você olhar
+#     e, no fim, o script roda o --checar dentro de cada cópia. A cópia sai do ÚLTIMO COMMIT e vem sem o que está fora
+#     do git (node_modules, .venv): commite antes e instale as dependências no --checar. As cópias ficam para você olhar
 #     (apagar: git worktree remove .ab/<combinação>).
 #   - ANTHROPIC_API_KEY é retirada do ambiente: o teste usa a ASSINATURA, não a API. Para medir na API de propósito: AB_USAR_API=1.
 #   - Cada rodada gasta o seu limite (o Fable gasta mais rápido). Comece com uma tarefa pequena e real.
@@ -26,7 +27,7 @@ while [ $# -gt 0 ]; do
     --editar) EDITAR=1; shift ;;
     --checar) CHECAR=$2; shift 2 ;;
     --turnos) TURNOS=$2; shift 2 ;;
-    -h|--help) sed -n '2,21p' "$0"; exit 0 ;;
+    -h|--help) sed -n '2,/^set -uo/p' "$0" | grep '^#'; exit 0 ;;
     *) [ -z "$TAREFA" ] && TAREFA=$1 || { echo "argumento a mais: $1" >&2; exit 2; }; shift ;;
   esac
 done
