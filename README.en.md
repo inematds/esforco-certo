@@ -45,7 +45,7 @@ cat politica/CLAUDE-esforco.md >> ~/meu-projeto/CLAUDE.md
 | `agentes/` | `dia-a-dia` (Opus, medium), `trabalho-longo` (Fable, high), `mecanico` (Haiku, low). |
 | `resets.md` | Guide to using Fable resets (promotion through 16/11/2026) on a long-running task. |
 | `exemplos/` | Report from the test project and a summary of a production machine. |
-| `tests/` | 18 offline tests: `python3 -m unittest discover tests`. |
+| `tests/` | 19 offline tests: `python3 -m unittest discover tests`. |
 
 ## The process, from start to finish
 

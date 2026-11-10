@@ -26,7 +26,7 @@ import json, os, re, sys
 from datetime import date
 from pathlib import Path
 
-VERSAO = '1.0.2'
+VERSAO = '1.0.3'
 MARCA = 'auditar.py — mostra em que MODELO'
 IGNORAR_DIR = {'.git', 'node_modules', '.venv', 'venv', 'env', '__pycache__', 'dist', 'build', '.next', '.cache',
                'site-packages', '.mypy_cache', '.pytest_cache', '.tox', 'target', 'vendor', '.ab'}
@@ -184,8 +184,14 @@ class Auditoria:
             s = linha.strip()
             if not s or s.startswith('#') and not s.startswith('#!'):
                 continue
-            if RE_SO_TEXTO.match(s):  # echo/log/print de uma frase que cita o comando não roda nada
-                continue
+            if RE_SO_TEXTO.match(s):
+                # echo/log/print que só CITA o comando (dentro de aspas) não roda nada; mas `echo "x" | claude -p …` roda:
+                # mascara o que está entre aspas e segue a partir do claude/codex que sobrar fora delas
+                masc = re.sub(r'"(?:\\.|[^"\\])*"|\'[^\']*\'', lambda q: ' ' * len(q.group(0)), s)
+                fora = RE_CLAUDE.search(masc) or RE_CODEX.search(masc)
+                if not fora:
+                    continue
+                s = s[fora.start():]
             if RE_CLAUDE.search(s) and ('-p' in s.split() or '--print' in s or '--model' in s or '--effort' in s):
                 m = RE_MODEL_FLAG.search(s)
                 e = RE_EFFORT_FLAG.search(s)

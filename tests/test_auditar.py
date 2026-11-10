@@ -105,6 +105,10 @@ class TestAuditar(unittest.TestCase):
             r = subprocess.run([sys.executable, str(RAIZ / 'auditar.py'), d, '--json'], capture_output=True, text=True)
             self.assertEqual(json.loads(r.stdout)['achados'], [])
 
+    def test_pipe_depois_de_echo_conta(self):
+        self.assertTrue([a for a in self.ach if a['trecho'].startswith('claude -p --model fable --effort max')])
+        self.assertTrue([a for a in self.ach if a['trecho'].startswith('codex exec -m gpt-6-astra')])
+
     def test_dica_sem_effort(self):
         dicas = [d for d in self.d['dicas'] if 'sem --effort' in d['msg']]
         self.assertTrue(dicas)  # rodar.sh: claude -p com --model e sem --effort não passa calado

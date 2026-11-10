@@ -1,16 +1,17 @@
 # Auditoria de modelo e esforço — 2026-11-09
 
-Pastas: . · esforco-certo 1.0.2
+Pastas: . · esforco-certo 1.0.3
 
-**15 lugares** fixam modelo ou esforço · **7 alertas** · 3 dicas
+**17 lugares** fixam modelo ou esforço · **8 alertas** · 3 dicas
 
-Modelos: fable 5 · opus 5 · herda 2 · variavel 1 · codex 1 · haiku 1
-Esforços: padrão 5 · max 3 · xhigh 3 · high 2 · variavel 1 · low 1
+Modelos: fable 6 · opus 5 · herda 2 · codex 2 · variavel 1 · haiku 1
+Esforços: padrão 6 · max 4 · xhigh 3 · high 2 · variavel 1 · low 1
 
 ## Alertas (custam caro sem precisar)
 
 - **MAX** `./scripts/api.py:4` — Esforço Max fixo. No FrontierCode 2.0 o Max fez menos que o Xhigh e custou ~3x mais. Troque por high (ou xhigh se o resultado pedir) e meça com o ab.sh.
 - **MAX** `./scripts/rodar.sh:3` — Esforço Max fixo. No FrontierCode 2.0 o Max fez menos que o Xhigh e custou ~3x mais. Troque por high (ou xhigh se o resultado pedir) e meça com o ab.sh.
+- **MAX** `./scripts/rodar.sh:13` — Esforço Max fixo. No FrontierCode 2.0 o Max fez menos que o Xhigh e custou ~3x mais. Troque por high (ou xhigh se o resultado pedir) e meça com o ab.sh.
 - **FABLE_PADRAO** `./.claude/settings.json:2` — Fable como modelo padrão gasta o limite mais rápido. A Anthropic recomenda o Opus 5.5 no dia a dia e o Fable no trabalho mais difícil.
 - **PADRAO_ALTO** `./.claude/settings.json:3` — Xhigh como padrão global: todo pedido paga o topo. Deixe medium/high como padrão e suba o esforço só na tarefa difícil.
 - **PADRAO_ALTO** `./.claude/settings.json:9` — Xhigh como padrão do claude-opus-5-5: todo pedido paga o topo. Deixe medium/high como padrão e suba o esforço só na tarefa difícil.
@@ -37,6 +38,8 @@ Esforços: padrão 5 · max 3 · xhigh 3 · high 2 · variavel 1 · low 1
 | `./scripts/api.py:3` | api | api | claude-fable-5-2 | padrão |
 | `./scripts/api.py:4` | api | api | claude-opus-5-5 | max |
 | `./scripts/rodar.sh:12` | script | claude | opus | padrão |
+| `./scripts/rodar.sh:13` | script | claude | fable | max |
+| `./scripts/rodar.sh:14` | script | codex | gpt-6-astra | padrão |
 | `./scripts/rodar.sh:2` | script | claude | opus | high |
 | `./scripts/rodar.sh:3` | script | claude | fable | max |
 | `./scripts/rodar.sh:6` | script | claude | herda | padrão |

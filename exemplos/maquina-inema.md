@@ -3,7 +3,7 @@
 `python3 auditar.py <3 projetos de vídeo e bots> --home --anonimo` (resumo; a tabela completa lista pastas privadas e
 fica fora do repositório).
 
-**38 lugares** fixam modelo ou esforço · **3 alertas** · 2 dicas
+**38 lugares** fixam modelo ou esforço · **3 alertas** · 6 dicas
 
 Modelos: variavel 13 · sonnet 9 · herda 7 · opus 6 · fable 3
 Esforços: padrão 20 · high 14 · low 2 · xhigh 2
@@ -22,4 +22,4 @@ por variável, lida de um arquivo central de modelos, então trocar o padrão de
 
 ## Dicas
 
-- 2 robôs chamam `claude -p` sem `--model` (herdam o padrão da conta — hoje, o Fable).
+- 2 robôs chamam `claude -p` sem `--model` (herdam o padrão da conta — hoje, o Fable) e 4 sem `--effort`.

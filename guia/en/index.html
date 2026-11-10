@@ -213,7 +213,7 @@
 
   <div class="step"><div class="b">2</div><div>
     <h3>Audit your project</h3>
-    <p>First, a risk-free test on the sample project included in the kit (it intentionally produces 7 alerts). Then, your project: the list shows every place that fixes a model or effort level, with file and line. <code style="white-space:nowrap">--home</code> includes your <code>~/.claude</code> (global settings, agents, and skills) and the user's systemd timers.</p>
+    <p>First, a risk-free test on the sample project included in the kit (it intentionally produces 8 alerts). Then, your project: the list shows every place that fixes a model or effort level, with file and line. <code style="white-space:nowrap">--home</code> includes your <code>~/.claude</code> (global settings, agents, and skills) and the user's systemd timers.</p>
 <pre><span class="k">python3 auditar.py</span> tests/fixture      <span class="c"># kit sample</span>
 <span class="k">python3 auditar.py</span> ~/meu-projeto \
   --home                             <span class="c"># your project</span>
@@ -285,13 +285,13 @@
   <div class="grid g2">
     <div class="card"><h3>Sample project (<code>tests/fixture</code>)</h3>
 <pre><span class="c"># cd tests/fixture &amp;&amp; python3 ../../auditar.py .</span>
-15 lugares fixam modelo ou esforço · 7 alertas · 3 dicas
-Modelos: fable 5 · opus 5 · herda 2 · variavel 1 · codex 1 · haiku 1
+17 lugares fixam modelo ou esforço · 8 alertas · 3 dicas
+Modelos: fable 6 · opus 5 · herda 2 · codex 2 · variavel 1 · haiku 1
 - MAX          ./scripts/api.py:4
 - MAX          ./scripts/rodar.sh:3
 - FABLE_PADRAO ./.claude/settings.json:2
 - PADRAO_ALTO  ./.claude/settings.json:3
-… e mais 3 alertas</pre>
+… e mais 4 alertas</pre>
       <p>Full report in <a href="https://github.com/inematds/esforco-certo/blob/main/exemplos/auditoria-exemplo.md" target="_blank" rel="noopener">exemplos/auditoria-exemplo.md</a> (in Portuguese).</p></div>
     <div class="card"><h3>Production machine (3 projects + ~/.claude)</h3>
 <pre>38 lugares fixam modelo ou esforço · 3 alertas
@@ -317,7 +317,7 @@ effort: high
   <span class="chip">Roadmap</span>
   <h2>What is available now and what may come next</h2>
   <p class="sub">The kit is small by design. New ideas will only be added if they help you make better decisions.</p>
-  <div class="phase"><div class="tag">1.0 · today</div><div class="d"><strong>Audit, rule, agents, A/B test, reset plan</strong><span>All tested: 18 offline tests and ab.sh run in both modes.</span></div></div>
+  <div class="phase"><div class="tag">1.0 · today</div><div class="d"><strong>Audit, rule, agents, A/B test, reset plan</strong><span>All tested: 19 offline tests and ab.sh run in both modes.</span></div></div>
   <div class="phase"><div class="tag">Idea</div><div class="d"><strong>Actual usage by effort</strong><span>Use the records Claude Code already saves to add up how much of your limit each model and effort level used during the week (as the sibling kit <a href="https://inematds.github.io/medidor-de-limite/guia/" target="_blank" rel="noopener">medidor-de-limite</a> does by project).</span></div></div>
   <div class="phase"><div class="tag">Idea</div><div class="d"><strong>Ready-made change suggestion</strong><span>For each alert, show the exact line to change — without applying it automatically.</span></div></div>
 </div></section>
