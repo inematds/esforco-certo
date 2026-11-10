@@ -26,7 +26,7 @@ import json, os, re, sys
 from datetime import date
 from pathlib import Path
 
-VERSAO = '1.0.1'
+VERSAO = '1.0.2'
 MARCA = 'auditar.py — mostra em que MODELO'
 IGNORAR_DIR = {'.git', 'node_modules', '.venv', 'venv', 'env', '__pycache__', 'dist', 'build', '.next', '.cache',
                'site-packages', '.mypy_cache', '.pytest_cache', '.tox', 'target', 'vendor', '.ab'}
@@ -284,6 +284,8 @@ class Auditoria:
         for a in self.achados:
             if a['tipo'] == 'script' and a['ferramenta'] == 'claude' and not a['modelo']:
                 out.append((a, 'claude sem --model: herda o padrão da conta (pode mudar sem você ver). Fixe o modelo.'))
+            elif a['tipo'] == 'script' and a['ferramenta'] == 'claude' and not a['esforco'] and a['familia'] not in ('fable', 'mythos'):
+                out.append((a, 'claude sem --effort: herda o esforço padrão (medium, ou o do seu settings). Diga o esforço.'))
             elif a['tipo'] == 'script' and a['familia'] in ('fable', 'mythos') and not a['esforco']:
                 out.append((a, 'Fable sem --effort: no Claude Code o padrão é medium. Diga o esforço que você quer.'))
             elif a['tipo'] == 'api' and a['familia'] in ('fable', 'mythos') and not a['esforco']:

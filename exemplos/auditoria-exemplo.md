@@ -1,11 +1,11 @@
 # Auditoria de modelo e esforço — 2026-11-09
 
-Pastas: . · esforco-certo 1.0.1
+Pastas: . · esforco-certo 1.0.2
 
-**14 lugares** fixam modelo ou esforço · **7 alertas** · 2 dicas
+**15 lugares** fixam modelo ou esforço · **7 alertas** · 3 dicas
 
-Modelos: fable 5 · opus 4 · herda 2 · variavel 1 · codex 1 · haiku 1
-Esforços: padrão 4 · max 3 · xhigh 3 · high 2 · variavel 1 · low 1
+Modelos: fable 5 · opus 5 · herda 2 · variavel 1 · codex 1 · haiku 1
+Esforços: padrão 5 · max 3 · xhigh 3 · high 2 · variavel 1 · low 1
 
 ## Alertas (custam caro sem precisar)
 
@@ -21,6 +21,7 @@ Esforços: padrão 4 · max 3 · xhigh 3 · high 2 · variavel 1 · low 1
 
 - `./scripts/api.py:3` — Chamada de API com Fable sem esforço na mesma linha: confira qual esforço ela usa e deixe explícito.
 - `./scripts/rodar.sh:6` — claude sem --model: herda o padrão da conta (pode mudar sem você ver). Fixe o modelo.
+- `./scripts/rodar.sh:12` — claude sem --effort: herda o esforço padrão (medium, ou o do seu settings). Diga o esforço.
 
 ## Tudo o que foi achado
 
@@ -35,6 +36,7 @@ Esforços: padrão 4 · max 3 · xhigh 3 · high 2 · variavel 1 · low 1
 | `./.claude/settings.json:9` | settings (padrão) | claude | claude-opus-5-5 | xhigh |
 | `./scripts/api.py:3` | api | api | claude-fable-5-2 | padrão |
 | `./scripts/api.py:4` | api | api | claude-opus-5-5 | max |
+| `./scripts/rodar.sh:12` | script | claude | opus | padrão |
 | `./scripts/rodar.sh:2` | script | claude | opus | high |
 | `./scripts/rodar.sh:3` | script | claude | fable | max |
 | `./scripts/rodar.sh:6` | script | claude | herda | padrão |

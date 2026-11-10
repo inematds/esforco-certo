@@ -23,7 +23,7 @@ TAREFA=""; DIR=$PWD; EDITAR=0; CHECAR=""; TURNOS=${AB_TURNOS:-40}; TETO=${AB_TIM
 while [ $# -gt 0 ]; do
   case "$1" in
     -c) CFGS+=("$2"); shift 2 ;;
-    --dir) DIR=$(realpath "$2"); shift 2 ;;
+    --dir) DIR=$(cd "$2" && pwd) || exit 2; shift 2 ;;
     --editar) EDITAR=1; shift ;;
     --checar) CHECAR=$2; shift 2 ;;
     --turnos) TURNOS=$2; shift 2 ;;
@@ -91,7 +91,7 @@ done
   echo "Tarefa: $TAREFA"; echo
   echo "| Combinação | Status (modelo) | Tempo | Turnos | Tokens de saída | Custo equivalente* | Teste |"
   echo "|---|---|---|---|---|---|---|"
-  sed 's/\t/ | /g; s/^/| /; s/$/ |/' "$SAI/linhas.tsv"
+  awk -F'\t' '{ s = "|"; for (i = 1; i <= NF; i++) s = s " " $i " |"; print s }' "$SAI/linhas.tsv"
   echo
   echo "\* Custo que o Claude Code calcula pela tabela da API. Na assinatura você não paga isso: paga em limite."
   echo "Leia as respostas ($SAI/*.md) antes de decidir: o mais barato que resolve bem é o seu padrão."

@@ -105,6 +105,10 @@ class TestAuditar(unittest.TestCase):
             r = subprocess.run([sys.executable, str(RAIZ / 'auditar.py'), d, '--json'], capture_output=True, text=True)
             self.assertEqual(json.loads(r.stdout)['achados'], [])
 
+    def test_dica_sem_effort(self):
+        dicas = [d for d in self.d['dicas'] if 'sem --effort' in d['msg']]
+        self.assertTrue(dicas)  # rodar.sh: claude -p com --model e sem --effort não passa calado
+
     def test_pasta_inexistente(self):
         rc, _ = rodar('/nao/existe/mesmo')
         self.assertEqual(rc, 2)

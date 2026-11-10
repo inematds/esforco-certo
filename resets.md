@@ -19,7 +19,7 @@ até metade do limite da semana. O conselho: **não gaste reset no dia a dia** (
 ```bash
 claude --model fable --effort high
 # ou, sem parar, com o agente pronto deste kit:
-cp agentes/trabalho-longo.md .claude/agents/
+cp agentes/trabalho-longo.md ~/meu-projeto/.claude/agents/   # rodado da pasta do kit
 ```
 - [ ] Acompanhe o uso em Configurações → Uso. Quando chegar perto do limite do Fable, use o reset.
 - [ ] Não troque para `max` no meio. Se travar, peça o diagnóstico e decida você.
