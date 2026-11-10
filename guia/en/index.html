@@ -278,6 +278,28 @@
   </div></div>
 </div></section>
 
+<section id="pedir"><div class="wrap">
+  <span class="chip">Tips · how to request effort</span>
+  <h2>Can you request effort in natural language?</h2>
+  <p class="sub">It depends on who will run it. Asking in the conversation does not change the effort of the session you are speaking in; it changes the effort of the work you ask to delegate.</p>
+  <div class="grid g2">
+    <div class="card"><h3>1. In the current session: command</h3><p>Writing "use high effort" in the conversation changes nothing: the model does not change its own effort. Use the <code>/effort</code> command (or <code>/model</code> to switch models), or start the session with the effort already set.</p>
+<pre><span class="k">/effort</span> high
+<span class="c"># or, when starting the session:</span>
+<span class="k">claude</span> --model opus --effort high</pre></div>
+    <div class="card"><h3>2. Subagents: natural language</h3><p>For delegated work, asking in the conversation works. Claude passes the model and effort to the subagent, and only sets the effort when you explicitly ask; without a request, the agent's default applies.</p>
+<pre><span class="s">"do the review with an Opus subagent at high effort"</span>
+<span class="s">"run this search on Haiku, low effort"</span></pre></div>
+    <div class="card"><h3>3. Fixed rule: CLAUDE.md and agents</h3><p>Written in CLAUDE.md, it counts as an explicit request in every session, with no need to repeat it. Agents with <code>model:</code> and <code>effort:</code> in the header, like the three in the kit, start with the right effort already set.</p>
+<pre><span class="c"># in CLAUDE.md</span>
+- reviews: Opus on high
+- mechanical tasks: Haiku on low</pre></div>
+    <div class="card"><h3>4. Bots: command-line option</h3><p>With <code>claude -p</code>, effort is set only through the <code>--effort</code> option. Without it, the bot inherits the account default, and <code>auditar.py</code> will warn you.</p>
+<pre><span class="k">claude</span> -p --model opus --effort medium \
+  <span class="s">"summarize today's log"</span></pre></div>
+  </div>
+</div></section>
+
 <section id="exemplos"><div class="wrap">
   <span class="chip">Examples</span>
   <h2>What the kit actually showed</h2>

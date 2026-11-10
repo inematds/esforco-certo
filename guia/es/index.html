@@ -278,6 +278,28 @@
   </div></div>
 </div></section>
 
+<section id="pedir"><div class="wrap">
+  <span class="chip">Consejos · cómo pedir el nivel de esfuerzo</span>
+  <h2>¿Se puede pedir el nivel de esfuerzo en lenguaje natural?</h2>
+  <p class="sub">Depende de quién vaya a ejecutarlo. Pedirlo en la conversación no cambia el nivel de esfuerzo de la sesión en la que estás hablando; cambia el nivel de esfuerzo del trabajo que delegas.</p>
+  <div class="grid g2">
+    <div class="card"><h3>1. En la sesión actual: comando</h3><p>Escribir "usa esfuerzo alto" en la conversación no cambia nada: el modelo no cambia su propio nivel de esfuerzo. Usa el comando <code>/effort</code> (o <code>/model</code> para cambiar el modelo), o inicia la sesión directamente con ese nivel de esfuerzo.</p>
+<pre><span class="k">/effort</span> high
+<span class="c"># o, al iniciar la sesión:</span>
+<span class="k">claude</span> --model opus --effort high</pre></div>
+    <div class="card"><h3>2. Subagentes: lenguaje natural</h3><p>Para el trabajo delegado, pedirlo en la conversación funciona. Claude pasa el modelo y el nivel de esfuerzo al subagente, y solo fija el nivel de esfuerzo cuando lo pides explícitamente; si no lo pides, se aplica el valor predeterminado del agente.</p>
+<pre><span class="s">"haz la revisión con un subagente Opus en esfuerzo alto"</span>
+<span class="s">"ejecuta esta búsqueda en Haiku, esfuerzo bajo"</span></pre></div>
+    <div class="card"><h3>3. Regla fija: CLAUDE.md y agentes</h3><p>Si lo escribes en CLAUDE.md, cuenta como una solicitud explícita en cada sesión, sin necesidad de repetirla. Los agentes con <code>model:</code> y <code>effort:</code> en el encabezado, como los tres del kit, ya se inician con el nivel de esfuerzo correcto.</p>
+<pre><span class="c"># en CLAUDE.md</span>
+- revisiones: Opus en high
+- tareas mecánicas: Haiku en low</pre></div>
+    <div class="card"><h3>4. Robots: opción en la línea de comandos</h3><p>En <code>claude -p</code>, el nivel de esfuerzo se especifica únicamente con la opción <code>--effort</code>. Si no la incluyes, el robot hereda el valor predeterminado de la cuenta y <code>auditar.py</code> lo señala.</p>
+<pre><span class="k">claude</span> -p --model opus --effort medium \
+  <span class="s">"resume el registro de hoy"</span></pre></div>
+  </div>
+</div></section>
+
 <section id="exemplos"><div class="wrap">
   <span class="chip">Ejemplos</span>
   <h2>Lo que el kit mostró en la práctica</h2>

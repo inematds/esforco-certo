@@ -278,6 +278,28 @@
   </div></div>
 </div></section>
 
+<section id="pedir"><div class="wrap">
+  <span class="chip">Dicas · como pedir o esforço</span>
+  <h2>Dá para pedir o esforço em linguagem natural?</h2>
+  <p class="sub">Depende de quem vai rodar. Pedir na conversa não muda o esforço da sessão em que você está falando; muda o esforço do trabalho que você manda delegar.</p>
+  <div class="grid g2">
+    <div class="card"><h3>1. Na sessão atual: comando</h3><p>Escrever "use esforço alto" na conversa não muda nada: o modelo não troca o próprio esforço. Use o comando <code>/effort</code> (ou <code>/model</code> para trocar o modelo), ou abra a sessão já com o esforço.</p>
+<pre><span class="k">/effort</span> high
+<span class="c"># ou, ao abrir a sessão:</span>
+<span class="k">claude</span> --model opus --effort high</pre></div>
+    <div class="card"><h3>2. Subagentes: linguagem natural</h3><p>No trabalho delegado, pedir na conversa funciona. O Claude passa o modelo e o esforço para o subagente, e só fixa o esforço quando você pede explicitamente; sem pedido, vale o padrão do agente.</p>
+<pre><span class="s">"faz a revisão com um subagente Opus em esforço alto"</span>
+<span class="s">"roda essa busca no Haiku, esforço baixo"</span></pre></div>
+    <div class="card"><h3>3. Regra fixa: CLAUDE.md e agentes</h3><p>Escrito no CLAUDE.md, vale como pedido explícito em toda sessão, sem precisar repetir. Agentes com <code>model:</code> e <code>effort:</code> no cabeçalho, como os três do kit, já nascem com o esforço certo.</p>
+<pre><span class="c"># no CLAUDE.md</span>
+- revisões: Opus em high
+- tarefas mecânicas: Haiku em low</pre></div>
+    <div class="card"><h3>4. Robôs: opção na linha de comando</h3><p>No <code>claude -p</code>, o esforço vem só pela opção <code>--effort</code>. Sem ela, o robô herda o padrão da conta, e o <code>auditar.py</code> avisa.</p>
+<pre><span class="k">claude</span> -p --model opus --effort medium \
+  <span class="s">"resuma o log de hoje"</span></pre></div>
+  </div>
+</div></section>
+
 <section id="exemplos"><div class="wrap">
   <span class="chip">Exemplos</span>
   <h2>O que o kit mostrou de verdade</h2>
