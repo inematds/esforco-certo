@@ -115,6 +115,7 @@
   <div class="links">
     <a class="sec" href="#oque">O que é</a>
     <a class="sec" href="#numeros">Os números</a>
+    <a class="sec" href="#comparar">Comparar</a>
     <a class="sec" href="#guia">Guia de uso</a>
     <a class="sec" href="#exemplos">Exemplos</a>
     <a class="sec" href="#roadmap">Roadmap</a>
@@ -175,6 +176,28 @@
     <div class="card"><span class="num">4</span><h3>Fable · max</h3><p><strong>~45,7%</strong> por ~US$ 45: menos que o xhigh, cerca de 3× o custo. Por isso o Max não é padrão.</p></div>
   </div>
   <p class="sub" style="margin-top:1.4em">Dois cuidados. No esforço medium, o Fable fica uns 3 pontos acima do Opus pelo mesmo custo; e em outro teste (desenho de hardware) o melhor resultado veio no Max. A regra não é "nunca Max", é "Max só com medida". E toda a tabela de notas é no esforço mais alto disponível, enquanto o Claude Code vem no medium: o placar não é o que você roda.</p>
+</div></section>
+
+<section id="comparar"><div class="wrap">
+  <span class="chip">Comparar sem se enganar</span>
+  <h2>Ganhar no bonito não é ganhar: capacidade, interpretação ou esforço?</h2>
+  <p class="sub">Comparações do tipo "mesmo prompt, qual ficou mais bonito" misturam três coisas. Se um modelo roda bem mais tempo e gasta bem mais, parte da diferença pode ser só mais esforço. E ir além do pedido (animação, imagem, personagem) impressiona quem avalia, mas não é resolver melhor o pedido: num jogo, ficar mais bonito e perder na jogabilidade é resolver pior.</p>
+  <div class="grid g3">
+    <div class="card"><h3>🧠 Capacidade</h3><p>O modelo enxerga sozinho como melhorar o projeto, sem receber a instrução?</p></div>
+    <div class="card"><h3>🎯 Interpretação</h3><p>Ele entendeu melhor o objetivo e decidiu certo — inclusive o que estava implícito?</p></div>
+    <div class="card"><h3>⏱️ Esforço</h3><p>Ele gastou mais tempo, raciocínio, ferramentas e dinheiro para chegar lá?</p></div>
+  </div>
+  <h3 style="margin-top:1.6em">Os três experimentos que separam isso</h3>
+  <div class="grid g3">
+    <div class="card"><span class="num">1</span><h3>Mesmo orçamento</h3><p>Mesmo prompt, mesmo teto de turnos e tempo, mesmas ferramentas. <strong>Responde:</strong> quem entrega mais qualidade com recursos iguais.</p><pre><span class="k">./ab.sh</span> "&lt;tarefa&gt;" --turnos 30 \
+  -c opus:high -c fable:high</pre></div>
+    <div class="card"><span class="num">2</span><h3>Melhor esforço</h3><p>Cada modelo no esforço em que rende mais, registrando todo o custo. <strong>Responde:</strong> qual faz o melhor resultado final, e quanto custa.</p><pre><span class="k">./ab.sh</span> "&lt;tarefa&gt;" \
+  -c opus:xhigh -c fable:xhigh</pre></div>
+    <div class="card"><span class="num">3</span><h3>Mesmo resultado</h3><p>Critérios objetivos escritos antes; os dois trabalham até atingir o padrão. <strong>Responde:</strong> quantas rodadas, correções e minutos seus custa o produto pronto.</p><pre><span class="k">./ab.sh</span> "&lt;tarefa + critérios&gt;" \
+  --editar --checar "npm test" \
+  -c opus:high -c fable:high</pre></div>
+  </div>
+  <p class="sub" style="margin-top:1.4em">Uma tentativa única não prova que um modelo interpreta melhor todos os requisitos, escreve código melhor, erra menos, precisa de menos intervenções ou rende mais por dólar. A pergunta certa é <strong>qual transforma uma especificação em produto excelente e funcional com o menor custo total</strong>. O protocolo completo, com a ficha de avaliação (pedido × extra, avaliação às cegas, custo = modelo + seu tempo), está em <a href="https://github.com/inematds/esforco-certo/blob/main/politica/comparar-modelos.md" target="_blank" rel="noopener"><code>politica/comparar-modelos.md</code></a>.</p>
 </div></section>
 
 <section id="fluxo"><div class="wrap">

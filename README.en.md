@@ -42,6 +42,7 @@ cat politica/CLAUDE-esforco.md >> ~/meu-projeto/CLAUDE.md
 | `auditar.py` | Reads `.claude/settings*.json` (`model`, `effortLevel`, `modelSettings.<modelo>.effortLevel`), agents, skills, commands, scripts, timers, and code that calls the API. Alerts: `MAX`, `PADRAO_ALTO`, `FABLE_PADRAO`. Options: `--home`, `--json`, `--estrito` (CI), `--anonimo`, `--docs`. |
 | `ab.sh` | Runs the same prompt with `claude -p` across 2+ `model:effort` combinations (default `opus:high fable:medium fable:high`). Read-only by default; `--editar` uses one git worktree of the last commit per combination (commit first; it comes without `node_modules`/`.venv`), and `--checar "<cmd>"` runs your test — install dependencies in it, e.g. `--checar "npm ci && npm test"`. Shows time, tokens, equivalent cost, and the model that actually ran. Uses your subscription (removes `ANTHROPIC_API_KEY` from the environment). |
 | `politica/CLAUDE-esforco.md` | Ready-to-use block for CLAUDE.md/AGENTS.md. |
+| `politica/comparar-modelos.en.md` | Protocol to compare two models without fooling yourself: separates capability, interpretation and effort in 3 experiments (same budget, best effort, same result) + a blind evaluation form. |
 | `agentes/` | `dia-a-dia` (Opus, medium), `trabalho-longo` (Fable, high), `mecanico` (Haiku, low). |
 | `resets.md` | Guide to using Fable resets (promotion through 16/11/2026) on a long-running task. |
 | `exemplos/` | Report from the test project and a summary of a production machine. |
@@ -55,7 +56,7 @@ cat politica/CLAUDE-esforco.md >> ~/meu-projeto/CLAUDE.md
 | 2 | Audit the project | `python3 auditar.py <pasta> --home` | ⚙️ script |
 | 3 | Choose the default based on the alerts | read the report; manually change `model`/`effortLevel` | 🧠 you |
 | 4 | Add the rule and agents | `cat politica/CLAUDE-esforco.md >> CLAUDE.md` · `cp agentes/*.md .claude/agents/` + `git commit` | 🧠 you |
-| 5 | Measure on your own work | `./ab.sh "<task>" --dir <folder> [--editar --checar "<test>"]` | 🤖 `claude -p` |
+| 5 | Measure on your own work (to compare models: the 3 experiments in `politica/comparar-modelos.en.md`) | `./ab.sh "<task>" --dir <folder> [--editar --checar "<test>"]` | 🤖 `claude -p` |
 | 6 | Enforce in CI | `cp auditar.py <project>/tools/` · in CI: `python3 tools/auditar.py . --estrito` | ⚙️ script |
 | 7 | Use the resets on a long-running task | follow `resets.md` | 🧠 you + 🤖 |
 

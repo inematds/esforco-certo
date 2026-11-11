@@ -26,7 +26,7 @@ import json, os, re, sys
 from datetime import date
 from pathlib import Path
 
-VERSAO = '1.0.3'
+VERSAO = '1.1.3'
 MARCA = 'auditar.py — mostra em que MODELO'
 IGNORAR_DIR = {'.git', 'node_modules', '.venv', 'venv', 'env', '__pycache__', 'dist', 'build', '.next', '.cache',
                'site-packages', '.mypy_cache', '.pytest_cache', '.tox', 'target', 'vendor', '.ab'}

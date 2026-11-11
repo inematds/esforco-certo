@@ -115,6 +115,7 @@
   <div class="links">
     <a class="sec" href="#oque">What it is</a>
     <a class="sec" href="#numeros">The numbers</a>
+    <a class="sec" href="#comparar">Compare</a>
     <a class="sec" href="#guia">How to use it</a>
     <a class="sec" href="#exemplos">Examples</a>
     <a class="sec" href="#roadmap">Roadmap</a>
@@ -175,6 +176,28 @@
     <div class="card"><span class="num">4</span><h3>Fable · max</h3><p><strong>~45.7%</strong> at about US$ 45: lower than xhigh, at about 3× the cost. That's why Max is not the default.</p></div>
   </div>
   <p class="sub" style="margin-top:1.4em">Two things to keep in mind. At medium effort, Fable scores about 3 points higher than Opus at the same cost; and in another test (hardware design), the best result came at Max. The rule is not "never Max"; it's "Max only after measuring." The entire score table uses each model's highest available effort, while Claude Code defaults to medium: those scores do not reflect what you run.</p>
+</div></section>
+
+<section id="comparar"><div class="wrap">
+  <span class="chip">Compare without fooling yourself</span>
+  <h2>Looking better isn’t winning: capability, interpretation, or effort?</h2>
+  <p class="sub">Comparisons like “same prompt, which one looked better” mix three things. If one model runs for much longer and costs much more, some of the difference may simply come from greater effort. Going beyond the request (animation, images, characters) may impress evaluators, but it doesn’t mean the model fulfilled the request better: in a game, making it look better while losing at gameplay means a worse result.</p>
+  <div class="grid g3">
+    <div class="card"><h3>🧠 Capability</h3><p>Can the model see on its own how to improve the project, without being told?</p></div>
+    <div class="card"><h3>🎯 Interpretation</h3><p>Did it understand the goal better and make the right decisions—including about what was implied?</p></div>
+    <div class="card"><h3>⏱️ Effort</h3><p>Did it spend more time, reasoning, tools, and money to get there?</p></div>
+  </div>
+  <h3 style="margin-top:1.6em">The three experiments that separate these factors</h3>
+  <div class="grid g3">
+    <div class="card"><span class="num">1</span><h3>Same budget</h3><p>Same prompt, same turn and time limits, same tools. <strong>Answers:</strong> who delivers higher quality with equal resources.</p><pre><span class="k">./ab.sh</span> "&lt;task&gt;" --turnos 30 \
+  -c opus:high -c fable:high</pre></div>
+    <div class="card"><span class="num">2</span><h3>Best effort</h3><p>Each model at the effort level where it performs best, with all costs recorded. <strong>Answers:</strong> which produces the best final result, and how much it costs.</p><pre><span class="k">./ab.sh</span> "&lt;task&gt;" \
+  -c opus:xhigh -c fable:xhigh</pre></div>
+    <div class="card"><span class="num">3</span><h3>Same result</h3><p>Objective criteria written in advance; both work until they meet the standard. <strong>Answers:</strong> how many rounds, corrections, and minutes of your time the finished product takes.</p><pre><span class="k">./ab.sh</span> "&lt;task + criteria&gt;" \
+  --editar --checar "npm test" \
+  -c opus:high -c fable:high</pre></div>
+  </div>
+  <p class="sub" style="margin-top:1.4em">A single attempt doesn’t prove that a model interprets all requirements better, writes better code, makes fewer mistakes, needs fewer interventions, or delivers more per dollar. The right question is <strong>which one turns a specification into an excellent, functional product at the lowest total cost</strong>. The full protocol, including the evaluation form (request × extras, blind evaluation, cost = model + your time), is at <a href="https://github.com/inematds/esforco-certo/blob/main/politica/comparar-modelos.en.md" target="_blank" rel="noopener"><code>politica/comparar-modelos.en.md</code></a>.</p>
 </div></section>
 
 <section id="fluxo"><div class="wrap">
